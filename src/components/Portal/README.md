@@ -1,12 +1,12 @@
-# Portal
+# `Portal`
 
 The portal component renders its children into a new "subtree" outside of current component hierarchy.
 
-The children of the portal component will be appended to the container specified. The component is used internally by the ```Modal``` and ```Popper``` components.
+The children of the portal component will be appended to the container specified. The component is used internally by the `Modal` and `Popper` components.
 
 ## Server-side
 
-React doesn't support the ```createPortal()``` API on the server. You have to wait for the client-side hydration to see the children.
+React doesn't support the `createPortal()` API on the server. You have to wait for the client-side hydration to see the children.
 
 ## Example
 
