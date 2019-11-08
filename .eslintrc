@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["react-hooks"],
+  "rules": {
+    "prettier/prettier": "off",
+    "max-len": ["error", 120],
+    "linebreak-style": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}
