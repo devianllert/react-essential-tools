@@ -11,6 +11,7 @@ Essential tools for React.
 
 * [useAsync](./src/hooks/useAsync)
 * [useAsyncFn](./src/hooks/useAsyncFn)
+* [useBoolean](./src/hooks/useBoolean)
 * [useSetState](./src/hooks/useSetState)
 * [useMountedState](./src/hooks/useMountedState)
 * [useIsomorphicLayoutEffect](./src/hooks/useIsomorphicLayoutEffect)

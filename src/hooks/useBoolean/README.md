@@ -1,0 +1,22 @@
+# `useBoolean`
+
+React state hook that tracks value of a boolean.
+
+## Example
+
+```jsx
+import { useBoolean } from 'react-essential-tools';
+
+const Demo = () => {
+  const [on, toggle] = useBoolean(true);
+
+  return (
+    <div>
+      <div>{on ? 'ON' : 'OFF'}</div>
+      <button onClick={toggle}>Toggle</button>
+      <button onClick={() => toggle(true)}>set ON</button>
+      <button onClick={() => toggle(false)}>set OFF</button>
+    </div>
+  );
+};
+```
