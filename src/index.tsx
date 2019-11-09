@@ -3,3 +3,4 @@ export * from './components/Popper';
 
 export * from './hooks/useIsomorphicLayoutEffect';
 export * from './hooks/useSetState';
+export * from './hooks/useMountedState';

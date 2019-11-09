@@ -10,6 +10,7 @@ Essential tools for React.
 ## Hooks
 
 * [useSetState](./src/hooks/useSetState)
+* [useMountedState](./src/hooks/useMountedState)
 * [useIsomorphicLayoutEffect](./src/hooks/useIsomorphicLayoutEffect)
 
 ## Usage
