@@ -9,6 +9,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [useLocalStorage](./src/hooks/useLocalStorage)
 * [useAsync](./src/hooks/useAsync)
 * [useAsyncFn](./src/hooks/useAsyncFn)
 * [useBoolean](./src/hooks/useBoolean)

@@ -7,3 +7,4 @@ export * from './hooks/useMountedState';
 export * from './hooks/useAsyncFn';
 export * from './hooks/useAsync';
 export * from './hooks/useBoolean';
+export * from './hooks/useLocalStorage';
