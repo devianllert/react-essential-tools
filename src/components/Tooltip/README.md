@@ -30,6 +30,6 @@ function MyComponent(props) {
 // ...
 
 <Tooltip title="tooltip">
-  <MyComponent>
+  <MyComponent />
 </Tooltip>
 ```

@@ -10,3 +10,4 @@ export * from './hooks/useAsync';
 export * from './hooks/useBoolean';
 export * from './hooks/useLocalStorage';
 export * from './hooks/useMount';
+export * from './hooks/useUnmount';
