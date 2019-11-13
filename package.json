@@ -14,8 +14,17 @@
   "main": "dist/index.js",
   "module": "dist/react-essential-tools.esm.js",
   "typings": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "tooltip",
+    "portal",
+    "popper",
+    "hooks",
+    "react-hooks",
+    "react"
   ],
   "scripts": {
     "start": "tsdx watch",
