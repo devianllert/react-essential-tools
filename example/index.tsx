@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Portal, Popper } from '../.';
+import { Portal, Popper, Tooltip } from '../.';
 
 const App = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -26,6 +26,14 @@ const App = () => {
         <Popper id={id} open={open} anchorEl={anchorEl} placement="right">
           <div>The content of the Popper.</div>
         </Popper>
+      </div>
+
+      <div>
+        <Tooltip title="It's button tooltip" interactive>
+          <button type="button" onClick={handleClick}>
+            Toggle Popper
+          </button>
+        </Tooltip>
       </div>
     </div>
   );

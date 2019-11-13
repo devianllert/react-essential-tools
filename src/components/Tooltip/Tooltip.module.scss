@@ -1,0 +1,45 @@
+/* Styles applied to the Popper component. */
+.popper {
+  z-index: 15;
+  pointer-events: none;
+}
+/* Styles applied to the Popper component if `interactive={true}`. */
+.popperInteractive {
+  pointer-events: auto;
+}
+/* Styles applied to the tooltip (label wrapper) element. */
+.tooltip {
+  background-color: #000;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  padding: 4px 8px;
+  font-size: 12px;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+/* Styles applied to the tooltip (label wrapper) element if the tooltip is opened by touch. */
+.touch {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+/* Styles applied to the tooltip (label wrapper) element if `placement` contains "left". */
+.tooltipPlacementLeft {
+  transform-origin: right center;
+  margin: 0 4px;
+}
+/* Styles applied to the tooltip (label wrapper) element if `placement` contains "right". */
+.tooltipPlacementRight {
+  transform-origin: left center;
+  margin: 0 4px;
+}
+/* Styles applied to the tooltip (label wrapper) element if `placement` contains "top". */
+.tooltipPlacementTop {
+  transform-origin: center bottom;
+  margin: 4px 0;
+}
+/* Styles applied to the tooltip (label wrapper) element if `placement` contains "bottom". */
+.tooltipPlacementBottom {
+  transform-origin: center top;
+  margin: 4px 0;
+}

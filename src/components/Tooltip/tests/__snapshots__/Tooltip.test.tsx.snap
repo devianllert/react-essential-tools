@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tooltip /> snapshots should render and match the snapshot 1`] = `
+<div>
+  <button
+    title="Hello World"
+    type="submit"
+  >
+    Hello World
+  </button>
+</div>
+`;
+
+exports[`<Tooltip /> snapshots should render and match the snapshot when hovered 1`] = `
+<div>
+  <button
+    aria-describedby="tooltip"
+    type="submit"
+  >
+    Hello World
+  </button>
+</div>
+`;
+
+exports[`<Tooltip /> snapshots should render and match the tooltip snapshot 1`] = `
+<div
+  class="popper"
+  id="tooltip"
+  role="tooltip"
+  style="position: fixed;"
+>
+  <div
+    class="tooltip tooltipPlacementBottom"
+  >
+    Hello World
+  </div>
+</div>
+`;
