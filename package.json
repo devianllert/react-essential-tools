@@ -30,7 +30,8 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
-    "lint": "tsdx lint src"
+    "lint": "tsdx lint src",
+    "release": "np"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -38,10 +39,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint src"
+      "pre-commit": "tsdx lint src --fix"
     }
   },
+  "np": {
+    "contents": "dist"
+  },
   "devDependencies": {
+    "np": "*",
     "@testing-library/jest-dom": "^4.2.3",
     "@testing-library/react": "^9.3.2",
     "@testing-library/react-hooks": "^3.2.1",
