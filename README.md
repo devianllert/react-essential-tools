@@ -10,6 +10,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [useInterval](./src/hooks/useInterval)
 * [usePrevious](./src/hooks/usePrevious)
 * [useMount](./src/hooks/useMount)
 * [useUnmount](./src/hooks/useUnmount)
