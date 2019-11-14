@@ -10,6 +10,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [usePrevious](./src/hooks/usePrevious)
 * [useMount](./src/hooks/useMount)
 * [useUnmount](./src/hooks/useUnmount)
 * [useLocalStorage](./src/hooks/useLocalStorage)
