@@ -16,3 +16,4 @@ export * from './hooks/useInterval';
 export * from './hooks/useTimeoutFn';
 export * from './hooks/useEvent';
 export * from './hooks/useKey';
+export * from './hooks/useWindowScroll';
