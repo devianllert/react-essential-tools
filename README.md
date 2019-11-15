@@ -10,6 +10,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [useKey](./src/hooks/useKey)
 * [useEvent](./src/hooks/useEvent)
 * [useTimeoutFn](./src/hooks/useTimeoutFn)
 * [useInterval](./src/hooks/useInterval)
