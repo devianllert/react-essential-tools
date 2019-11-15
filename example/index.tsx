@@ -29,7 +29,7 @@ const App = () => {
       </div>
 
       <div>
-        <Tooltip title="It's button tooltip" interactive>
+        <Tooltip title="It's button tooltip">
           <button type="button" onClick={handleClick}>
             Toggle Popper
           </button>

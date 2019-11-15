@@ -30,6 +30,7 @@
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
     "lint": "tsdx lint src",
+    "demo": "cd ./example && npm start",
     "release": "np"
   },
   "peerDependencies": {
