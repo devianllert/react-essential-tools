@@ -14,3 +14,4 @@ export * from './hooks/useUnmount';
 export * from './hooks/usePrevious';
 export * from './hooks/useInterval';
 export * from './hooks/useTimeoutFn';
+export * from './hooks/useEvent';

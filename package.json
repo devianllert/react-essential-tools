@@ -42,9 +42,6 @@
       "pre-commit": "tsdx lint src --fix"
     }
   },
-  "np": {
-    "contents": "dist"
-  },
   "devDependencies": {
     "np": "*",
     "@testing-library/jest-dom": "^4.2.3",
