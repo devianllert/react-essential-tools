@@ -31,7 +31,7 @@
     "test": "tsdx test --env=jsdom",
     "lint": "tsdx lint src",
     "demo": "cd ./example && npm start",
-    "release": "np"
+    "release": "np --contents ."
   },
   "peerDependencies": {
     "react": ">=16",
