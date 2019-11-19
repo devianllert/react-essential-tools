@@ -19,7 +19,7 @@ export interface Props {
   container?: Element;
   disablePortal?: boolean;
   keepMounted?: boolean;
-  modifiers?: object;
+  modifiers?: PopperJS.Modifiers;
   open: boolean;
   placement?: Placement;
   popperOptions?: PopperOptions;

@@ -1,1 +1,1 @@
-export * from './usePrevious.ts';
+export * from './usePrevious';

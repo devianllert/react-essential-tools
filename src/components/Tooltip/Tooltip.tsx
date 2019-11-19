@@ -1,12 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  cloneElement,
-  ReactElement,
-  ChangeEvent,
-} from 'react';
+import * as React from 'react';
 import clsx from 'clsx';
 
 import { useIsFocusVisible } from '../../utils/focusVisible';
@@ -16,6 +8,7 @@ import { Popper } from '../Popper';
 import styles from './Tooltip.module.scss';
 
 interface Props {
+  arrow?: boolean;
   children: React.ReactElement;
   disableFocusListener?: boolean;
   disableHoverListener?: boolean;
@@ -26,8 +19,8 @@ interface Props {
   interactive?: boolean;
   leaveDelay?: number;
   leaveTouchDelay?: number;
-  onClose?: (event: ChangeEvent<{}>) => void;
-  onOpen?: (event: ChangeEvent<{}>) => void;
+  onClose?: (event: React.ChangeEvent<{}>) => void;
+  onOpen?: (event: React.ChangeEvent<{}>) => void;
   open?: boolean;
   placement?:
     | 'bottom-end'
@@ -48,8 +41,9 @@ interface Props {
 
 const capitalize = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
 
-export const Tooltip = (props: Props): ReactElement => {
+export const Tooltip = (props: Props): React.ReactElement => {
   const {
+    arrow = false,
     children,
     disableFocusListener = false,
     disableHoverListener = false,
@@ -71,21 +65,22 @@ export const Tooltip = (props: Props): ReactElement => {
 
   const { isFocusVisible, onBlurVisible, ref: focusVisibleRef } = useIsFocusVisible();
 
-  const [openState, setOpenState] = useState(false);
-  const [childIsFocusVisible, setChildIsFocusVisible] = useState(false);
-  const [, forceUpdate] = useState(0);
-  const [childNode, setChildNode] = useState<Element>();
+  const [openState, setOpenState] = React.useState(false);
+  const [arrowRef, setArrowRef] = React.useState();
+  const [childIsFocusVisible, setChildIsFocusVisible] = React.useState(false);
+  const [, forceUpdate] = React.useState(0);
+  const [childNode, setChildNode] = React.useState<Element>();
 
-  const ignoreNonTouchEvents = useRef(false);
-  const { current: isControlled } = useRef(openProp != null);
+  const ignoreNonTouchEvents = React.useRef(false);
+  const { current: isControlled } = React.useRef(openProp != null);
 
-  const defaultId = useRef<string>();
-  const closeTimer = useRef<number>();
-  const enterTimer = useRef<number>();
-  const leaveTimer = useRef<number>();
-  const touchTimer = useRef<number>();
+  const defaultId = React.useRef<string>();
+  const closeTimer = React.useRef<number>();
+  const enterTimer = React.useRef<number>();
+  const leaveTimer = React.useRef<number>();
+  const touchTimer = React.useRef<number>();
 
-  const handleRef = useCallback(
+  const handleRef = React.useCallback(
     (instance: HTMLElement) => {
       setChildNode(instance);
       focusVisibleRef(instance);
@@ -93,7 +88,7 @@ export const Tooltip = (props: Props): ReactElement => {
     [focusVisibleRef],
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Fallback to this default id when possible.
     // Use the random value for client-side rendering only.
     // We can't use it server-side.
@@ -107,7 +102,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }
   }, [openProp]);
 
-  useEffect(
+  React.useEffect(
     () => (): void => {
       clearTimeout(closeTimer.current);
       clearTimeout(enterTimer.current);
@@ -117,7 +112,7 @@ export const Tooltip = (props: Props): ReactElement => {
     [],
   );
 
-  const handleOpen = (event: ChangeEvent): void => {
+  const handleOpen = (event: React.ChangeEvent): void => {
     // The mouseover event will trigger for every nested element in the tooltip.
     // We can skip rerendering when the tooltip is already open.
     // We are using the mouseover event instead of the mouseenter event to fix a hide/show issue.
@@ -130,7 +125,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }
   };
 
-  const handleEnter = (event: ChangeEvent): void => {
+  const handleEnter = (event: React.ChangeEvent): void => {
     const childrenProps = children.props;
 
     if (event.type === 'mouseover' && childrenProps.onMouseOver) {
@@ -169,7 +164,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }
   };
 
-  const handleFocus = (event: ChangeEvent): void => {
+  const handleFocus = (event: React.ChangeEvent): void => {
     // Workaround for https://github.com/facebook/react/issues/7769
     // The autoFocus of React might trigger the event before the componentDidMount.
     // We need to account for this eventuality.
@@ -188,7 +183,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }
   };
 
-  const handleClose = (event: ChangeEvent): void => {
+  const handleClose = (event: React.ChangeEvent): void => {
     if (!isControlled) {
       setOpenState(false);
     }
@@ -204,7 +199,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }, 150);
   };
 
-  const handleLeave = (event: ChangeEvent): void => {
+  const handleLeave = (event: React.ChangeEvent): void => {
     const childrenProps = children.props;
 
     if (event.type === 'blur') {
@@ -228,7 +223,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }, leaveDelay);
   };
 
-  const handleTouchStart = (event: ChangeEvent): void => {
+  const handleTouchStart = (event: React.ChangeEvent): void => {
     ignoreNonTouchEvents.current = true;
     const childrenProps = children.props;
 
@@ -247,7 +242,7 @@ export const Tooltip = (props: Props): ReactElement => {
     }, enterTouchDelay);
   };
 
-  const handleTouchEnd = (event: ChangeEvent): void => {
+  const handleTouchEnd = (event: React.ChangeEvent): void => {
     if (children.props.onTouchEnd) {
       children.props.onTouchEnd(event);
     }
@@ -304,31 +299,42 @@ export const Tooltip = (props: Props): ReactElement => {
 
   return (
     <>
-      {cloneElement(children, { ref: handleRef, ...childrenProps })}
+      {React.cloneElement(children, { ref: handleRef, ...childrenProps })}
 
       <Popper
         className={clsx(styles.popper, {
           [styles.popperInteractive]: interactive,
+          [styles.popperArrow]: arrow,
         })}
         placement={placement}
         anchorEl={childNode}
         open={childNode ? open : false}
         id={childrenProps['aria-describedby']}
         transition
+        popperOptions={{
+          modifiers: {
+            arrow: {
+              enabled: Boolean(arrowRef),
+              element: arrowRef,
+            },
+          },
+        }}
         {...interactiveWrapperListeners} // eslint-disable-line
         {...PopperProps} // eslint-disable-line
       >
-        {({ placement: placementInner }): ReactElement => (
+        {({ placement: placementInner }): React.ReactElement => (
           <div
             className={clsx(
               styles.tooltip,
               {
                 [styles.touch]: ignoreNonTouchEvents.current,
+                [styles.tooltipArrow]: arrow,
               },
               styles[`tooltipPlacement${capitalize(placementInner.split('-')[0])}`],
             )}
           >
             {title}
+            {arrow ? <span className={styles.arrow} ref={setArrowRef} /> : null}
           </div>
         )}
       </Popper>
