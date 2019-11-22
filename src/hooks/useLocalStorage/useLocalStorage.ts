@@ -1,5 +1,12 @@
-/* eslint-disable no-console */
-import { useState } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from 'react';
+
+// import { on, off } from '../../utils/listeners';
 
 /**
  * Sync state to local storage so that it persists through a page refresh.
@@ -10,7 +17,7 @@ import { useState } from 'react';
  * @param {T} initialValue - initial value for local storage key
  */
 
-export const useLocalStorage = <T>(key: string, initialValue?: T): [T, (value: T) => void] => {
+export const useLocalStorage = <T>(key: string, initialValue?: T): [T, Dispatch<SetStateAction<T>>] => {
   const [storedValue, setStoredValue] = useState<T>((): T => {
     try {
       const item = window.localStorage.getItem(key);
@@ -19,28 +26,21 @@ export const useLocalStorage = <T>(key: string, initialValue?: T): [T, (value: T
     } catch (error) {
       // If user is in private mode or has storage restriction
       // localStorage can throw. JSON.parse and JSON.stringify
-      console.log(error);
 
       return initialValue as T;
     }
   });
 
-  const setValue = (value: T): void => {
+  const setValue = useCallback((): void => {
     try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-
-      setStoredValue(valueToStore);
-
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      window.localStorage.setItem(key, JSON.stringify(storedValue));
     } catch (error) {
       // If user is in private mode or has storage restriction
       // localStorage can throw. Also JSON.stringify can throw.
-
-      // A more advanced implementation would handle the error case
-      console.log(error);
     }
-  };
+  }, [key, storedValue]);
 
-  return [storedValue, setValue];
+  useEffect(() => setValue(), [storedValue, setValue]);
+
+  return [storedValue, setStoredValue];
 };
