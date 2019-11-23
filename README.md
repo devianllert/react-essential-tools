@@ -10,6 +10,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [useIntersection](./src/hooks/useIntersection)
 * [useClickAway](./src/hooks/useClickAway)
 * [useNetwork](./src/hooks/useNetwork)
 * [useWindowScroll](./src/hooks/useWindowScroll)

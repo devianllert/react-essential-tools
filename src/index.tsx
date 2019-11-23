@@ -19,3 +19,4 @@ export * from './hooks/useKey';
 export * from './hooks/useWindowScroll';
 export * from './hooks/useNetwork';
 export * from './hooks/useClickAway';
+export * from './hooks/useIntersection';
