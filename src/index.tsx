@@ -17,3 +17,4 @@ export * from './hooks/useTimeoutFn';
 export * from './hooks/useEvent';
 export * from './hooks/useKey';
 export * from './hooks/useWindowScroll';
+export * from './hooks/useNetwork';
