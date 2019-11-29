@@ -10,6 +10,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [useMotion](./src/hooks/useMotion)
 * [useClipboard](./src/hooks/useClipboard)
 * [useMouse](./src/hooks/useMouse)
 * [useIntersection](./src/hooks/useIntersection)
