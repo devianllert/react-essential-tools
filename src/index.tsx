@@ -23,3 +23,4 @@ export * from './hooks/useIntersection';
 export * from './hooks/useMouse';
 export * from './hooks/useClipboard';
 export * from './hooks/useMotion';
+export * from './hooks/useMedia';
