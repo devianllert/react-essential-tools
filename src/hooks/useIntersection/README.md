@@ -9,7 +9,7 @@ import { useIntersection } from 'react-essential-tools';
 
 const Demo = () => {
   const intersectionRef = React.useRef(null);
-  const intersection = useIntersection(intersectionRef, {
+  const { inView, entry } = useIntersection(intersectionRef, {
     root: null,
     rootMargin: '0px',
     threshold: 1
@@ -17,7 +17,7 @@ const Demo = () => {
 
   return (
     <div ref={intersectionRef}>
-      {intersection && intersection.intersectionRatio < 1
+      {entry && entry.intersectionRatio < 1
         ? 'Obscured'
         : 'Fully in view'}
     </div>

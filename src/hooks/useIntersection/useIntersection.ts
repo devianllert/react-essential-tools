@@ -1,21 +1,36 @@
 import { useState, useEffect, RefObject } from 'react';
 
+export interface UseIntersectionState {
+  inView: boolean;
+  entry?: IntersectionObserverEntry;
+}
+
+export interface UseIntersectionOptions extends IntersectionObserverInit {
+  triggerOnce?: boolean;
+}
+
 /**
  * Hook to track the visibility of a functional component based on IntersectionVisible Observer.
  */
 
 export const useIntersection = (
   ref: RefObject<HTMLElement>,
-  options: IntersectionObserverInit,
-): IntersectionObserverEntry | null => {
-  const [intersectionObserverEntry, setIntersectionObserverEntry] = useState<IntersectionObserverEntry | null>(null);
+  options: UseIntersectionOptions,
+): UseIntersectionState => {
+  const [state, setState] = useState<UseIntersectionState>({
+    inView: false,
+    entry: undefined,
+  });
 
   useEffect(() => {
     const element = ref.current;
 
     const observer = new IntersectionObserver(
       ([entry]): void => {
-        setIntersectionObserverEntry(entry);
+        setState({
+          inView: entry.isIntersecting,
+          entry,
+        });
       },
       options,
     );
@@ -31,5 +46,5 @@ export const useIntersection = (
     };
   }, [ref, options]);
 
-  return intersectionObserverEntry;
+  return state;
 };
