@@ -10,6 +10,7 @@ Essential tools for React.
 
 ## Hooks
 
+* [useHistory](./src/hooks/useHistory)
 * [useMedia](./src/hooks/useMedia)
 * [useMotion](./src/hooks/useMotion)
 * [useClipboard](./src/hooks/useClipboard)

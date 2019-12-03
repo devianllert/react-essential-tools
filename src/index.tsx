@@ -24,3 +24,4 @@ export * from './hooks/useMouse';
 export * from './hooks/useClipboard';
 export * from './hooks/useMotion';
 export * from './hooks/useMedia';
+export * from './hooks/useHistory';
