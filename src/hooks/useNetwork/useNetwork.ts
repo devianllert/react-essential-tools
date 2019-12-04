@@ -65,7 +65,7 @@ const getConnectionState = (): NetworkState => {
  * Hook that returns network information
  */
 
-const useNetwork = (): NetworkState => {
+export const useNetwork = (): NetworkState => {
   const [state, setState] = useState<NetworkState>({});
 
   useEffect((): (() => void) => {
@@ -124,5 +124,3 @@ const useNetwork = (): NetworkState => {
 
   return state;
 };
-
-export default useNetwork;
