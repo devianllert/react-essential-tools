@@ -24,6 +24,7 @@ Essential tools for React.
 * [useTimeoutFn](./src/hooks/useTimeoutFn)
 * [useInterval](./src/hooks/useInterval)
 * [usePrevious](./src/hooks/usePrevious)
+* [useUpdateEffect](./src/hooks/useUpdateEffect)
 * [useMount](./src/hooks/useMount)
 * [useUnmount](./src/hooks/useUnmount)
 * [useLocalStorage](./src/hooks/useLocalStorage)

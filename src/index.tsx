@@ -10,6 +10,7 @@ export * from './hooks/useAsyncFn';
 export * from './hooks/useAsync';
 export * from './hooks/useBoolean';
 export * from './hooks/useLocalStorage';
+export * from './hooks/useUpdateEffect';
 export * from './hooks/useMount';
 export * from './hooks/useUnmount';
 export * from './hooks/usePrevious';
