@@ -5,6 +5,7 @@ export * from './components/Tooltip';
 export * from './hooks/useIsomorphicLayoutEffect';
 export * from './hooks/useSetState';
 export * from './hooks/useMountedState';
+export * from './hooks/useFirstMountState';
 export * from './hooks/useAsyncFn';
 export * from './hooks/useAsync';
 export * from './hooks/useBoolean';
