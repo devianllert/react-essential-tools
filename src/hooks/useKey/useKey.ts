@@ -14,6 +14,7 @@ export interface UseKeyOptions {
   options?: AddEventListenerOptions;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = (): void => {};
 
 const createKeyPredicate = (keyFilter: UseKeyFilter): UseKeyPredicate => {

@@ -26,6 +26,7 @@ describe('useTimeoutFn', () => {
   });
 
   it('should return object with three functions', () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const hook = renderHook(() => useTimeoutFn(() => {}, 5));
 
     expect(typeof hook.result.current.isReady).toBe('function');

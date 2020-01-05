@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { renderHook } from '@testing-library/react-hooks';
 import { useEvent } from '../useEvent';
 
