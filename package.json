@@ -1,7 +1,6 @@
 {
-  "name": "react-essential-tools",
-  "version": "0.23.0",
-  "description": "Essential tools for React",
+  "name": "react-lib",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/devianllert/react-essential-tools.git"
@@ -12,65 +11,70 @@
   "author": "Ruslan Povolockii <devianllert@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/react-essential-tools.esm.js",
+  "module": "dist/react-lib.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "keywords": [
-    "tooltip",
-    "portal",
-    "popper",
-    "hooks",
-    "react-hooks",
-    "react"
-  ],
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --env=jsdom",
-    "lint": "tsdx lint src",
-    "demo": "cd ./example && npm start",
-    "release": "npm run build && np --contents ."
+    "test": "tsdx test --passWithNoTests --watchAll",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": ">=16",
-    "react-dom": ">=16"
+    "react": ">=16.8.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint src --fix"
+      "pre-commit": "tsdx lint --fix"
     }
   },
   "devDependencies": {
-    "np": "5.1.3",
+    "@babel/core": "^7.7.7",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-links": "^5.2.8",
+    "@storybook/addons": "^5.2.8",
+    "@storybook/react": "^5.2.8",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^24.0.23",
-    "@types/react": "^16.9.13",
+    "@types/jest": "^24.0.25",
+    "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
-    "autoprefixer": "^9.7.2",
+    "@types/styled-components": "^4.4.1",
+    "autoprefixer": "^9.7.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.6",
     "cssnano": "^4.1.10",
-    "eslint": "^6.7.1",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
+    "jest-styled-components": "^6.3.4",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.12.0",
     "rollup-plugin-postcss": "^2.0.3",
-    "tsdx": "^0.11.0",
+    "stylelint": "^12.0.1",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.9.0",
+    "ts-loader": "^6.2.1",
+    "tsdx": "^0.12.1",
     "tslib": "^1.10.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.4"
   },
   "dependencies": {
-    "clsx": "^1.0.4",
-    "popper.js": "^1.16.0"
+    "popper.js": "^1.16.0",
+    "styled-components": "^4.4.1"
   }
 }

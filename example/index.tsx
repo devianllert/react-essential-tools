@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Tooltip, useLocalStorage, useClipboard } from '../.';
+import { Tooltip, useLocalStorage, useClipboard } from '../src';
 
 const App = () => {
   const [ver, setVer] = useLocalStorage('version', '0.1');

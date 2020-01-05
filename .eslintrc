@@ -15,7 +15,8 @@
     "linebreak-style": "off",
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }]
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "import/extensions": ["off"]
   },
   "settings": {
     "import/resolver": {

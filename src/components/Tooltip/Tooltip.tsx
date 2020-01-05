@@ -1,11 +1,11 @@
 import * as React from 'react';
-import clsx from 'clsx';
+import styled from 'styled-components';
 
 import { useIsFocusVisible } from '../../utils/focusVisible';
 
+import { Arrow } from './Arrow';
+import { TooltipBox } from './TooltipBox';
 import { Popper } from '../Popper';
-
-import styles from './Tooltip.module.scss';
 
 interface Props {
   arrow?: boolean;
@@ -39,7 +39,14 @@ interface Props {
   title: React.ReactNode;
 }
 
-const capitalize = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
+interface StyledPopperProps {
+  interactive?: boolean;
+}
+
+const StyledPopper = styled(Popper)<StyledPopperProps>`
+  z-index: 15;
+  pointer-events: ${(props): string => (props.interactive ? 'auto' : 'none')};
+`;
 
 export const Tooltip = (props: Props): React.ReactElement => {
   const {
@@ -301,13 +308,10 @@ export const Tooltip = (props: Props): React.ReactElement => {
     <>
       {React.cloneElement(children, { ref: handleRef, ...childrenProps })}
 
-      <Popper
-        className={clsx(styles.popper, {
-          [styles.popperInteractive]: interactive,
-          [styles.popperArrow]: arrow,
-        })}
+      <StyledPopper
         placement={placement}
         anchorEl={childNode}
+        interactive={interactive}
         open={childNode ? open : false}
         id={childrenProps['aria-describedby']}
         transition
@@ -323,21 +327,16 @@ export const Tooltip = (props: Props): React.ReactElement => {
         {...PopperProps} // eslint-disable-line
       >
         {({ placement: placementInner }): React.ReactElement => (
-          <div
-            className={clsx(
-              styles.tooltip,
-              {
-                [styles.touch]: ignoreNonTouchEvents.current,
-                [styles.tooltipArrow]: arrow,
-              },
-              styles[`tooltipPlacement${capitalize(placementInner.split('-')[0])}`],
-            )}
+          <TooltipBox
+            interactive={interactive}
+            arrow={arrow}
+            placement={placementInner.split('-')[0]}
           >
             {title}
-            {arrow ? <span className={styles.arrow} ref={setArrowRef} /> : null}
-          </div>
+            {arrow ? <Arrow placement={placementInner.split('-')[0]} ref={setArrowRef} /> : null}
+          </TooltipBox>
         )}
-      </Popper>
+      </StyledPopper>
     </>
   );
 };

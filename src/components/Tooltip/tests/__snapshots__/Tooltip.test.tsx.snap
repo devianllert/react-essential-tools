@@ -24,13 +24,13 @@ exports[`<Tooltip /> snapshots should render and match the snapshot when hovered
 
 exports[`<Tooltip /> snapshots should render and match the tooltip snapshot 1`] = `
 <div
-  class="popper"
+  class="sc-htpNat hbUPtt"
   id="tooltip"
   role="tooltip"
   style="position: fixed;"
 >
   <div
-    class="tooltip tooltipPlacementBottom"
+    class="sc-bwzfXH iFufjy"
   >
     Hello World
   </div>
