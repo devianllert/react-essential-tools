@@ -35,6 +35,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/addon-a11y": "^5.2.8",
     "@storybook/addon-actions": "^5.2.8",
     "@storybook/addon-links": "^5.2.8",
     "@storybook/addons": "^5.2.8",
@@ -45,6 +47,7 @@
     "@types/jest": "^24.0.25",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "@types/react-transition-group": "^4.2.3",
     "@types/styled-components": "^4.4.1",
     "autoprefixer": "^9.7.3",
     "babel-loader": "^8.0.6",
@@ -76,6 +79,7 @@
   },
   "dependencies": {
     "popper.js": "^1.16.0",
+    "react-transition-group": "^4.3.0",
     "styled-components": "^4.4.1"
   }
 }

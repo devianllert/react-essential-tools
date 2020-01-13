@@ -9,6 +9,59 @@ import '@testing-library/jest-dom/extend-expect';
 describe('<Portal />', (): void => {
   afterEach(cleanup);
 
+  describe('ref', () => {
+    it('should have access to the mountNode when disabledPortal={false}', () => {
+      const refSpy = jest.fn();
+      const { unmount } = render(
+        <Portal ref={refSpy}>
+          <h1>Foo</h1>
+        </Portal>,
+      );
+
+      expect(refSpy).toBeCalledWith(document.body);
+      unmount();
+      expect(refSpy).toBeCalledWith(null);
+    });
+
+    it('should have access to the mountNode when disabledPortal={true}', () => {
+      const refSpy = jest.fn();
+      const { unmount } = render(
+        <Portal disablePortal ref={refSpy}>
+          <h1 className="woofPortal">Foo</h1>
+        </Portal>,
+      );
+
+      const mountNode = document.querySelector('.woofPortal');
+
+      expect(refSpy).toBeCalledWith(mountNode);
+      unmount();
+      expect(refSpy).toBeCalledWith(null);
+    });
+
+    it('should have access to the mountNode when switching disabledPortal', () => {
+      const refSpy = jest.fn();
+      const { rerender, unmount } = render(
+        <Portal disablePortal ref={refSpy}>
+          <h1 className="woofPortal">Foo</h1>
+        </Portal>,
+      );
+
+      const mountNode = document.querySelector('.woofPortal');
+
+      expect(refSpy).toBeCalledWith(mountNode);
+
+      rerender(
+        <Portal ref={refSpy}>
+          <h1 className="woofPortal">Foo</h1>
+        </Portal>,
+      );
+
+      expect(refSpy).toBeCalledWith(document.body);
+      unmount();
+      expect(refSpy).toBeCalledWith(null);
+    });
+  });
+
   it('should render in a different node', () => {
     const { container } = render(
       <div id="test1">
@@ -101,5 +154,49 @@ describe('<Portal />', (): void => {
 
     rerender(<ContainerTest containerElement />);
     expect(document.querySelector('#test3')!.parentNode!.nodeName).toEqual('STRONG');
+  });
+
+  it('should call ref after child effect', () => {
+    const callOrder: string[] = [];
+    const handleRef = (node: any): void => {
+      if (node) {
+        callOrder.push('ref');
+      }
+    };
+
+    const updateFunction = (): void => {
+      callOrder.push('effect');
+    };
+
+    function Test(props: any): any {
+      const { container } = props;
+
+      React.useEffect(() => {
+        updateFunction();
+      }, [container]);
+
+      return (
+        <Portal ref={handleRef} container={container}>
+          <div />
+        </Portal>
+      );
+    }
+
+    const { rerender } = render(<Test container={document.createElement('div')} />);
+
+    rerender(<Test container={null} />);
+    rerender(<Test container={document.createElement('div')} />);
+    rerender(<Test container={null} />);
+
+    expect(callOrder).toStrictEqual([
+      'effect',
+      'ref',
+      'effect',
+      'ref',
+      'effect',
+      'ref',
+      'effect',
+      'ref',
+    ]);
   });
 });

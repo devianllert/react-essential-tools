@@ -27,6 +27,7 @@ export default function SimplePortal() {
       <button type="button" onClick={handleClick}>
         {show ? 'Unmount children' : 'Mount children'}
       </button>
+
       <div>
         It looks like I will render here.
         {show && (
@@ -35,6 +36,7 @@ export default function SimplePortal() {
           </Portal>
         )}
       </div>
+
       <div ref={container} />
     </div>
   );
