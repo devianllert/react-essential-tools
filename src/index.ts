@@ -1,4 +1,5 @@
 export * from './components/Portal';
+export * from './components/Grow';
 export * from './components/Popper';
 export * from './components/Tooltip';
 

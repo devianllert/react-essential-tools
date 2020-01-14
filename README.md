@@ -12,6 +12,7 @@
 
 - [`Tooltip`](./src/components/Tooltip)
 - [`Popper`](./src/components/Popper)
+- [`Grow`](./src/components/Grow)
 - [`Portal`](./src/components/Portal)
 
 ## Hooks
