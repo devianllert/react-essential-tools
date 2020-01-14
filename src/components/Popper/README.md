@@ -1,6 +1,6 @@
 # `Popper`
 
-A Popper can be used to display some content on top of another. It's an alternative to react-popper.
+A Popper can be used to display some content on top of another.
 
 ## Example
 

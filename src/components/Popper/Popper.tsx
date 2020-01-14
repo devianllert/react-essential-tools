@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 import * as React from 'react';
 import PopperJS, {
   ReferenceObject,
@@ -5,12 +6,20 @@ import PopperJS, {
   Data,
   Placement,
 } from 'popper.js';
+import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
+
+import { setRef } from '../../utils/setRef';
+import { useForkRef } from '../../utils/useForkRef';
 
 import { Portal } from '../Portal';
 
 interface ChildProps {
   placement: Placement;
-  TransitionProps?: object;
+  TransitionProps?: {
+    in: boolean;
+    onEnter: EnterHandler;
+    onExited: ExitHandler;
+  };
 }
 
 export interface Props {
@@ -18,7 +27,6 @@ export interface Props {
   children: React.ReactNode | ((props: ChildProps) => React.ReactNode);
   container?: Element;
   disablePortal?: boolean;
-  keepMounted?: boolean;
   modifiers?: PopperJS.Modifiers;
   open: boolean;
   placement?: Placement;
@@ -37,27 +45,38 @@ function getAnchorEl(anchorEl: null | ReferenceObject | (() => ReferenceObject))
   return typeof anchorEl === 'function' ? anchorEl() : anchorEl;
 }
 
-export const Popper = (props: Props): React.ReactElement | null => {
+/**
+ * A Popper can be used to display some content on top of another.
+ */
+
+export const Popper = React.forwardRef(function Popper(props: Props, ref: React.Ref<HTMLDivElement>) {
   const {
     anchorEl,
     children,
     container,
     disablePortal = false,
-    keepMounted = false,
     modifiers,
     open,
     placement: initialPlacement = 'bottom',
     popperOptions = {},
+    popperRef: popperRefProp,
     transition = false,
     ...other
   } = props;
 
   const tooltipRef = React.useRef<Element>();
   const popperRef = React.useRef<PopperJS>();
+  const ownRef = useForkRef(tooltipRef, ref);
 
   const [exited, setExited] = React.useState(true);
 
   const [placement, setPlacement] = React.useState(initialPlacement);
+
+  React.useEffect(() => {
+    if (popperRef.current) {
+      popperRef.current.update();
+    }
+  });
 
   const handleOpen = React.useCallback(() => {
     if (!tooltipRef.current || !anchorEl || !open) {
@@ -108,14 +127,15 @@ export const Popper = (props: Props): React.ReactElement | null => {
 
     popper.scheduleUpdate();
 
-    popperRef.current = popper;
-  }, [anchorEl, disablePortal, modifiers, open, placement, popperOptions]);
+    setRef(popperRefProp, popper);
+    setRef(popperRef, popper);
+  }, [popperRefProp, anchorEl, disablePortal, modifiers, open, placement, popperOptions]);
 
-  const handleRef = React.useCallback((node) => {
-    tooltipRef.current = node;
+  const handleRef = React.useCallback((node: HTMLDivElement): void => {
+    setRef(ownRef, node);
 
     handleOpen();
-  }, [tooltipRef, handleOpen]);
+  }, [ownRef, handleOpen]);
 
   const handleEnter = (): void => {
     setExited(false);
@@ -148,7 +168,7 @@ export const Popper = (props: Props): React.ReactElement | null => {
     }
   }, [open, transition]);
 
-  if (!keepMounted && !open && (!transition || exited)) {
+  if (!open && (!transition || exited)) {
     return null;
   }
 
@@ -176,4 +196,4 @@ export const Popper = (props: Props): React.ReactElement | null => {
       </div>
     </Portal>
   );
-};
+});

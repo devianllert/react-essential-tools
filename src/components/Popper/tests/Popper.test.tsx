@@ -12,6 +12,7 @@ jest.mock('popper.js', () => {
 
     constructor() {
       return {
+        update: (): void => {},
         destroy: (): void => {},
         scheduleUpdate: (): void => {},
       };
