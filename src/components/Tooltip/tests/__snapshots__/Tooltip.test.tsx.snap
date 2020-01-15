@@ -30,7 +30,8 @@ exports[`<Tooltip /> snapshots should render and match the tooltip snapshot 1`] 
   style="position: fixed;"
 >
   <div
-    class="sc-bwzfXH iFufjy"
+    class="sc-bdVaJa iyWxMV"
+    style="opacity: 1; transform: scale(1, 1); transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
   >
     Hello World
   </div>

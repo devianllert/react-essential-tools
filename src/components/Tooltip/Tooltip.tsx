@@ -1,15 +1,21 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import { TransitionProps } from '../../utils/transitions';
 import { useIsFocusVisible } from '../../utils/focusVisible';
+import { setRef } from '../../utils/setRef';
+import { useForkRef } from '../../utils/useForkRef';
 
-import { Arrow } from './Arrow';
-import { TooltipBox } from './TooltipBox';
 import { Popper } from '../Popper';
+import { Grow } from '../Grow';
+import { TooltipContent } from './TooltipContent';
+import { TooltipArrow } from './TooltipArrow';
 
 interface Props {
   arrow?: boolean;
   children: React.ReactElement;
+  className?: string;
+  arrowClassName?: string;
   disableFocusListener?: boolean;
   disableHoverListener?: boolean;
   disableTouchListener?: boolean;
@@ -37,10 +43,12 @@ interface Props {
     | 'top';
   PopperProps?: Partial<import('../Popper/Popper').Props>;
   title: React.ReactNode;
+  TransitionComponent?: React.ComponentType<TransitionProps>;
+  TransitionProps?: TransitionProps;
 }
 
 interface StyledPopperProps {
-  interactive?: boolean;
+  interactive: boolean;
 }
 
 const StyledPopper = styled(Popper)<StyledPopperProps>`
@@ -48,7 +56,7 @@ const StyledPopper = styled(Popper)<StyledPopperProps>`
   pointer-events: ${(props): string => (props.interactive ? 'auto' : 'none')};
 `;
 
-export const Tooltip = (props: Props): React.ReactElement => {
+export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.ReactInstance>): React.ReactElement => {
   const {
     arrow = false,
     children,
@@ -67,47 +75,53 @@ export const Tooltip = (props: Props): React.ReactElement => {
     placement = 'bottom',
     PopperProps,
     title,
+    className,
+    arrowClassName,
+    TransitionComponent = Grow,
+    TransitionProps: TransitionComponentProps,
     ...other
   } = props;
 
-  const { isFocusVisible, onBlurVisible, ref: focusVisibleRef } = useIsFocusVisible();
-
-  const [openState, setOpenState] = React.useState(false);
-  const [arrowRef, setArrowRef] = React.useState();
-  const [childIsFocusVisible, setChildIsFocusVisible] = React.useState(false);
-  const [, forceUpdate] = React.useState(0);
   const [childNode, setChildNode] = React.useState<Element>();
+  const [arrowRef, setArrowRef] = React.useState();
 
   const ignoreNonTouchEvents = React.useRef(false);
+
+  const [openState, setOpenState] = React.useState(false);
+  const [childIsFocusVisible, setChildIsFocusVisible] = React.useState(false);
+  const [defaultId, setDefaultId] = React.useState<string>();
+
   const { current: isControlled } = React.useRef(openProp != null);
 
-  const defaultId = React.useRef<string>();
+  const { isFocusVisible, onBlurVisible, ref: focusVisibleRef } = useIsFocusVisible();
+
   const closeTimer = React.useRef<number>();
   const enterTimer = React.useRef<number>();
   const leaveTimer = React.useRef<number>();
   const touchTimer = React.useRef<number>();
 
-  const handleRef = React.useCallback(
+  const handleOwnRef = React.useCallback(
     (instance: HTMLElement) => {
       setChildNode(instance);
       focusVisibleRef(instance);
+      setRef(ref, instance);
     },
-    [focusVisibleRef],
+    [ref, focusVisibleRef],
   );
 
+  const handleRef = useForkRef((children as any).ref, handleOwnRef);
+
   React.useEffect(() => {
+    if (!isControlled || defaultId) {
+      return;
+    }
     // Fallback to this default id when possible.
     // Use the random value for client-side rendering only.
     // We can't use it server-side.
-    if (!defaultId.current) {
-      defaultId.current = `tooltip-${Math.round(Math.random() * 1e5)}`;
+    if (!defaultId) {
+      setDefaultId(`tooltip-${Math.round(Math.random() * 1e5)}`);
     }
-
-    // Rerender with defaultId and childNode.
-    if (openProp) {
-      forceUpdate((n) => n + 1);
-    }
-  }, [openProp]);
+  }, [isControlled, defaultId]);
 
   React.useEffect(
     () => (): void => {
@@ -135,7 +149,7 @@ export const Tooltip = (props: Props): React.ReactElement => {
   const handleEnter = (event: React.ChangeEvent): void => {
     const childrenProps = children.props;
 
-    if (event.type === 'mouseover' && childrenProps.onMouseOver) {
+    if (event.type === 'mouseover' && childrenProps.onMouseOver && event.currentTarget === childNode) {
       childrenProps.onMouseOver(event);
     }
 
@@ -185,7 +199,7 @@ export const Tooltip = (props: Props): React.ReactElement => {
     }
 
     const childrenProps = children.props;
-    if (childrenProps.onFocus) {
+    if (childrenProps.onFocus && event.currentTarget === childNode) {
       childrenProps.onFocus(event);
     }
   };
@@ -210,13 +224,14 @@ export const Tooltip = (props: Props): React.ReactElement => {
     const childrenProps = children.props;
 
     if (event.type === 'blur') {
-      if (childrenProps.onBlur) {
+      if (childrenProps.onBlur && event.currentTarget === childNode) {
         childrenProps.onBlur(event);
       }
+
       handleBlur();
     }
 
-    if (event.type === 'mouseleave' && childrenProps.onMouseLeave) {
+    if (event.type === 'mouseleave' && childrenProps.onMouseLeave && event.currentTarget === childNode) {
       childrenProps.onMouseLeave(event);
     }
 
@@ -274,7 +289,7 @@ export const Tooltip = (props: Props): React.ReactElement => {
   const shouldShowNativeTitle = !open && !disableHoverListener;
 
   const childrenProps = {
-    'aria-describedby': open ? id || defaultId.current : null,
+    'aria-describedby': open ? id || defaultId : null,
     title: shouldShowNativeTitle && typeof title === 'string' ? title : null,
     ...other,
     ...children.props,
@@ -326,17 +341,28 @@ export const Tooltip = (props: Props): React.ReactElement => {
         {...interactiveWrapperListeners} // eslint-disable-line
         {...PopperProps} // eslint-disable-line
       >
-        {({ placement: placementInner }): React.ReactElement => (
-          <TooltipBox
-            interactive={interactive}
-            arrow={arrow}
-            placement={placementInner.split('-')[0]}
+        {({ placement: placementInner, TransitionProps: TransitionPropsInner }): React.ReactElement => (
+          <TransitionComponent
+            timeout={150}
+            in={TransitionPropsInner?.in}
+            onEnter={TransitionPropsInner?.onEnter}
+            onExited={TransitionPropsInner?.onExited}
+            {...TransitionComponentProps} // eslint-disable-line
           >
-            {title}
-            {arrow ? <Arrow placement={placementInner.split('-')[0]} ref={setArrowRef} /> : null}
-          </TooltipBox>
+            <TooltipContent
+              className={className}
+              interactive={interactive}
+              arrow={arrow}
+              placement={placementInner.split('-')[0]}
+            >
+              {title}
+              {arrow ? (
+                <TooltipArrow className={arrowClassName} placement={placementInner.split('-')[0]} ref={setArrowRef} />
+              ) : null}
+            </TooltipContent>
+          </TransitionComponent>
         )}
       </StyledPopper>
     </>
   );
-};
+});

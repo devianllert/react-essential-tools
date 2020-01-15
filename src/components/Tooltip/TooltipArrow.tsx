@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-interface ArrowProps {
+interface TooltipArrowProps {
   placement: string;
 }
 
-interface ArrowPlacement {
+interface TooltipArrowPlacement {
   [key: string]: string;
 }
 
-const arrowPlacement: ArrowPlacement = {
+const tooltipArrowPlacement: TooltipArrowPlacement = {
   bottom: `
     top: 0;
     left: 0;
@@ -58,7 +58,7 @@ const arrowPlacement: ArrowPlacement = {
 };
 
 
-export const Arrow = styled.span<ArrowProps>`
+export const TooltipArrow = styled.span<TooltipArrowProps>`
   position: absolute;
   font-size: 6px;
   color: #000;
@@ -72,5 +72,5 @@ export const Arrow = styled.span<ArrowProps>`
     border-style: solid;
   }
 
-  ${(props): string => arrowPlacement[props.placement]}
+  ${(props): string => tooltipArrowPlacement[props.placement]}
 `;
