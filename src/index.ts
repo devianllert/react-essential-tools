@@ -2,6 +2,7 @@ export * from './components/Portal';
 export * from './components/Grow';
 export * from './components/Popper';
 export * from './components/Tooltip';
+export * from './components/NoSsr';
 
 export * from './hooks/useIsomorphicLayoutEffect';
 export * from './hooks/useSetState';
