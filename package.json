@@ -1,6 +1,6 @@
 {
   "name": "react-essential-tools",
-  "version": "0.24.0",
+  "version": "0.26.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/devianllert/react-essential-tools.git"
@@ -11,7 +11,7 @@
   "author": "Ruslan Povolockii <devianllert@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/react-lib.esm.js",
+  "module": "dist/react-essential-tools.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
