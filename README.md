@@ -10,6 +10,7 @@
 
 ## Components
 
+- [`Skeleton`](./src/components/Skeleton)
 - [`NoSsr`](./src/components/NoSsr)
 - [`Tooltip`](./src/components/Tooltip)
 - [`Popper`](./src/components/Popper)
