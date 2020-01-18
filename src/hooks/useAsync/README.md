@@ -8,7 +8,7 @@ Hook that resolves an `async` function or a function that returns a promise
 import { useAsync } from 'react-essential-tools';
 
 const Demo = ({ url }) => {
-  const state = useAsync(async () => {
+  const [state] = useAsync(async () => {
     const response = await fetch(url);
     const result = await response.text();
     return result

@@ -9,9 +9,14 @@ export interface AsyncState<T> {
   result?: T;
 }
 
+export interface AsyncActions<T> {
+  start: (...args: any[]) => Promise<T | Error>;
+  cancel: () => void;
+}
+
 export type AsyncFn<T> = [
   AsyncState<T>,
-  (...args: any[]) => Promise<T | Error>,
+  AsyncActions<T>,
 ];
 
 /**
@@ -33,8 +38,15 @@ export const useAsyncFn = <T>(
 
   const isMounted = useMountedState();
 
-  const start = useCallback(async (...args: any[]): Promise<T | Error> => { // eslint-disable-line
+  const cancel = useCallback(() => {
     count.current += 1;
+
+    setState({ pending: false });
+  }, [setState]);
+
+  const start = useCallback(async (...args: any[]): Promise<T | Error> => { // eslint-disable-line
+    cancel();
+
     const runCount = count.current;
 
     setState({ error: undefined, pending: true });
@@ -52,5 +64,5 @@ export const useAsyncFn = <T>(
     }
   }, deps); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return [state, start];
+  return [state, { start, cancel }];
 };

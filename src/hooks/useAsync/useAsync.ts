@@ -6,7 +6,7 @@ import { useAsyncFn, AsyncFn, AsyncState } from '../useAsyncFn';
  */
 
 export const useAsync = <T>(fn: (...args: any[]) => Promise<T>, deps: DependencyList = []): AsyncFn<T> => {  // eslint-disable-line
-  const [state, start] = useAsyncFn<T>(fn, deps, {
+  const [state, { start, cancel }] = useAsyncFn<T>(fn, deps, {
     pending: true,
   });
 
@@ -14,7 +14,7 @@ export const useAsync = <T>(fn: (...args: any[]) => Promise<T>, deps: Dependency
     start();
   }, [start]);
 
-  return [state, start];
+  return [state, { start, cancel }];
 };
 
 export {
