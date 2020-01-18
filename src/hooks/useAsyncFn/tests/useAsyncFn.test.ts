@@ -4,9 +4,7 @@ import { useAsyncFn, AsyncFn } from '../useAsyncFn';
 
 type Fn<T> = (...args: any[]) => Promise<T>;
 
-const setUp = <T>(
-  callback: Fn<T>,
-): RenderHookResult<{ fn: Fn<T> }, AsyncFn<T>> => {
+const setUp = <T>(callback: Fn<T>): RenderHookResult<{ fn: Fn<T> }, AsyncFn<T>> => {
   const initialProps = { fn: callback };
 
   return renderHook(({ fn }): AsyncFn<T> => useAsyncFn(fn), { initialProps });
@@ -79,5 +77,32 @@ describe('useAsyncFn', () => {
     expect(state.pending).toEqual(false);
     expect(state.error).toBeUndefined();
     expect(state.result).toEqual(9);
+  });
+
+  it('should only consider last call and discard previous ones', async () => {
+    const queuedPromises: { id: number; resolve: () => void }[] = [];
+    const delayedFunction1 = () => new Promise((resolve) => queuedPromises.push({ id: 1, resolve: () => resolve(1) }));
+    const delayedFunction2 = () => new Promise((resolve) => queuedPromises.push({ id: 2, resolve: () => resolve(2) }));
+
+    const hook = renderHook(({ fn }) => useAsyncFn(fn, [fn]), {
+      initialProps: { fn: delayedFunction1 },
+    });
+
+    act(() => {
+      hook.result.current[1](); // invoke 1st callback
+    });
+
+    hook.rerender({ fn: delayedFunction2 });
+    act(() => {
+      hook.result.current[1](); // invoke 2nd callback
+    });
+
+    act(() => {
+      queuedPromises[1].resolve();
+      queuedPromises[0].resolve();
+    });
+
+    await hook.waitForNextUpdate();
+    expect(hook.result.current[0]).toEqual({ pending: false, result: 2 });
   });
 });
