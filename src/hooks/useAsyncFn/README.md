@@ -8,7 +8,7 @@ Hook that returns state and a callback for an `async` function or a function tha
 import { useAsyncFn } from 'react-essential-tools';
 
 const Demo = ({ url }) => {
-  const [state, fetch] = useAsyncFn(async () => {
+  const [state, { start, cancel }] = useAsyncFn(async () => {
     const response = await fetch(url);
     const result = await response.text();
 
@@ -28,7 +28,8 @@ const Demo = ({ url }) => {
 
       {(state.result && !state.pending) && <div>{state.result}</div>}
 
-      <button onClick={fetch}>Start loading</button>
+      <button onClick={start}>Start loading</button>
+      <button onClick={cancel}>Cancel loading</button>
     </div>
   );
 };
