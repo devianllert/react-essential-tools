@@ -8,7 +8,7 @@ export default {
 
 export const Basic = () => {
   const [state, setState] = React.useState(0);
-  const update = React.useCallback(() => setState(state + 1), []);
+  const update = React.useCallback(() => setState(state + 1), [state]);
 
   const isFirstMount = useFirstMountState();
 

@@ -9,5 +9,10 @@ export default {
 export const Basic = () => {
   const isWide = useMedia('(min-width: 480px)');
 
-  return <div>Screen is wide: {isWide ? 'Yes' : 'No'}</div>;
+  return (
+    <div>
+Screen is wide:
+      {isWide ? 'Yes' : 'No'}
+    </div>
+  );
 };
