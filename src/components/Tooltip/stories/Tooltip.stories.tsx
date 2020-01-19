@@ -6,7 +6,7 @@ import { Tooltip } from '../Tooltip';
 import { TooltipArrow } from '../TooltipArrow';
 
 export default {
-  title: 'Tooltip',
+  title: 'Components|Tooltip',
 };
 
 const StyledTooltip = styled(Tooltip)`
