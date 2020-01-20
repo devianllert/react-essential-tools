@@ -6,7 +6,10 @@ import { on, off } from '../../utils/listeners';
  * Hook that triggers a callback when user clicks outside the target element.
  */
 
-export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: MouseEvent) => void): void => {
+export const useClickAway = <T extends Event = Event>(
+  ref: RefObject<HTMLElement>,
+  handler: (event: T) => void,
+): void => {
   const savedCallback = useRef(handler);
 
   useEffect(() => {
@@ -15,7 +18,7 @@ export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: Mouse
 
   useEffect(
     (): (() => void) => {
-      const listener = (event: MouseEvent): void => {
+      const listener = (event: T): void => {
         if (!ref.current || ref.current.contains(event.target as Node)) {
           return;
         }
