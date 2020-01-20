@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from 'react';
+import { useEffect, useRef, RefObject } from 'react';
 
 import { on, off } from '../../utils/listeners';
 
@@ -7,6 +7,12 @@ import { on, off } from '../../utils/listeners';
  */
 
 export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: MouseEvent) => void): void => {
+  const savedCallback = useRef(handler);
+
+  useEffect(() => {
+    savedCallback.current = handler;
+  }, [handler]);
+
   useEffect(
     (): (() => void) => {
       const listener = (event: MouseEvent): void => {
@@ -14,7 +20,7 @@ export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: Mouse
           return;
         }
 
-        handler(event);
+        savedCallback.current(event);
       };
 
 
@@ -26,12 +32,6 @@ export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: Mouse
         off(document, 'touchstart', listener);
       };
     },
-    // Add ref and handler to effect dependencies
-    // It's worth noting that because passed in handler is a new ...
-    // ... function on every render that will cause this effect ...
-    // ... callback/cleanup to run every render. It's not a big deal ...
-    // ... but to optimize you can wrap handler in useCallback before ...
-    // ... passing it into this hook.
-    [ref, handler],
+    [ref],
   );
 };
