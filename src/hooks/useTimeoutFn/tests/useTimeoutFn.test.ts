@@ -8,7 +8,7 @@ function getHook(
   return [fn, renderHook(({ delay = 5, cb }) => useTimeoutFn(cb, delay), { initialProps: { delay: ms, cb: fn } })];
 }
 
-describe('ustartimeoutFn', () => {
+describe('useTimeoutFn', () => {
   beforeAll(() => {
     jest.useFakeTimers();
   });
