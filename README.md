@@ -19,6 +19,7 @@
 
 ## Hooks
 
+- [`useHover`](./src/hooks/useHover)
 - [`useHistory`](./src/hooks/useHistory)
 - [`useMedia`](./src/hooks/useMedia)
 - [`useMotion`](./src/hooks/useMotion)
