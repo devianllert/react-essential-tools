@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from 'react';
+import { useEffect, useRef, RefObject } from 'react';
 
 import { on, off } from '../../utils/listeners';
 
@@ -6,15 +6,24 @@ import { on, off } from '../../utils/listeners';
  * Hook that triggers a callback when user clicks outside the target element.
  */
 
-export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: MouseEvent) => void): void => {
+export const useClickAway = <T extends Event = Event>(
+  ref: RefObject<HTMLElement | null>,
+  handler: (event: T) => void,
+): void => {
+  const savedCallback = useRef(handler);
+
+  useEffect(() => {
+    savedCallback.current = handler;
+  }, [handler]);
+
   useEffect(
     (): (() => void) => {
-      const listener = (event: MouseEvent): void => {
+      const listener = (event: T): void => {
         if (!ref.current || ref.current.contains(event.target as Node)) {
           return;
         }
 
-        handler(event);
+        savedCallback.current(event);
       };
 
 
@@ -26,12 +35,6 @@ export const useClickAway = (ref: RefObject<HTMLElement>, handler: (event: Mouse
         off(document, 'touchstart', listener);
       };
     },
-    // Add ref and handler to effect dependencies
-    // It's worth noting that because passed in handler is a new ...
-    // ... function on every render that will cause this effect ...
-    // ... callback/cleanup to run every render. It's not a big deal ...
-    // ... but to optimize you can wrap handler in useCallback before ...
-    // ... passing it into this hook.
-    [ref, handler],
+    [ref],
   );
 };
