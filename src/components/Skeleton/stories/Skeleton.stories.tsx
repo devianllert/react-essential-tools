@@ -23,7 +23,7 @@ const CardContent = styled.div`
 
 
 export default {
-  title: 'Skeleton',
+  title: 'Components|Skeleton',
 };
 
 export const Basic = () => (

@@ -4,7 +4,7 @@ import { number, withKnobs } from '@storybook/addon-knobs';
 import { useAsync } from '../useAsync';
 
 export default {
-  title: 'useAsync',
+  title: 'Hooks|useAsync',
   decorators: [withKnobs],
 };
 

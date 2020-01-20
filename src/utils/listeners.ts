@@ -4,14 +4,14 @@ const on = (
   target: EventTarget,
   type: string,
   callback: EventListener | EventListenerObject | ((event: any) => void),
-  options?: AddEventListenerOptions,
+  options?: boolean | AddEventListenerOptions,
 ): void => target.addEventListener(type, callback, options);
 
 const off = (
   target: EventTarget,
   type: string,
   callback: EventListener | EventListenerObject | ((event: any) => void),
-  options?: EventListenerOptions,
+  options?: boolean | EventListenerOptions,
 ): void => target.removeEventListener(type, callback, options);
 
 export {

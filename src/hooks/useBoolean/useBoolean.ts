@@ -9,7 +9,7 @@ export const useBoolean = (initialBool = true): [boolean, (bool?: boolean) => vo
 
   const toggle = useCallback(
     (nextValue?: boolean): void => {
-      if (nextValue) {
+      if (typeof nextValue === 'boolean') {
         setBool(nextValue);
 
         return;

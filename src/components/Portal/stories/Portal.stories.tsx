@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Portal } from '../Portal';
 
 export default {
-  title: 'Portal',
+  title: 'Components|Portal',
 };
 
 const Content = styled.div`

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useAsyncFn } from '../useAsyncFn';
 
 export default {
-  title: 'useAsyncFn',
+  title: 'Hooks|useAsyncFn',
 };
 
 export const Basic = () => {

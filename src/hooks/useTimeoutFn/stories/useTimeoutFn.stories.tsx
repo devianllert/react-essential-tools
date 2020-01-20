@@ -1,20 +1,10 @@
-# `useTimeoutFn`
+import * as React from 'react';
 
-Calls given function after specified amount of milliseconds.
+import { useTimeoutFn } from '../useTimeoutFn';
 
-Not re-render component;
-Automatically clear timeout on unmount;
-Automatically clear timeout on delay change;
-Reset function call will cancel previous timeout;
-Timeout will NOT be clear on function change. It will be called within the timeout,
-You have to clear it on your own when needed.
-
-## Example
-
-```jsx
-import React from 'react';
-
-import { useTimeoutFn } from 'react-essential-tools';
+export default {
+  title: 'Hooks|useTimeoutFn',
+};
 
 export const Basic = () => {
   const [state, setState] = React.useState('Not started');
@@ -33,6 +23,7 @@ export const Basic = () => {
       start();
       setState('Not called yet');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const readyState = isReady();
@@ -59,4 +50,3 @@ export const Basic = () => {
     </div>
   );
 };
-```

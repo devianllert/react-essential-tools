@@ -1,14 +1,14 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import { useTimeoutFn, UseTimeoutFnReturn } from '../useTimeoutFn';
+import { useTimeoutFn, UseTimeoutFnState } from '../useTimeoutFn';
 
 function getHook(
   ms = 5,
   fn: Function = jest.fn(),
-): [Function, RenderHookResult<{ delay: number; cb: Function }, UseTimeoutFnReturn>] {
+): [Function, RenderHookResult<{ delay: number; cb: Function }, UseTimeoutFnState>] {
   return [fn, renderHook(({ delay = 5, cb }) => useTimeoutFn(cb, delay), { initialProps: { delay: ms, cb: fn } })];
 }
 
-describe('useTimeoutFn', () => {
+describe('ustartimeoutFn', () => {
   beforeAll(() => {
     jest.useFakeTimers();
   });
@@ -30,14 +30,14 @@ describe('useTimeoutFn', () => {
     const hook = renderHook(() => useTimeoutFn(() => {}, 5));
 
     expect(typeof hook.result.current.isReady).toBe('function');
-    expect(typeof hook.result.current.set).toBe('function');
+    expect(typeof hook.result.current.start).toBe('function');
     expect(typeof hook.result.current.clear).toBe('function');
   });
 
   it('should call passed function after given amount of time', () => {
     const [spy, hook] = getHook();
 
-    act(() => hook.result.current.set());
+    act(() => hook.result.current.start());
 
     expect(spy).not.toHaveBeenCalled();
 
@@ -60,9 +60,9 @@ describe('useTimeoutFn', () => {
 
   it('isReady function should return actual state of timeout', () => {
     let [, hook] = getHook();
-    let { isReady, set } = hook.result.current;
+    let { isReady, start } = hook.result.current;
 
-    act(() => set());
+    act(() => start());
 
     expect(isReady()).toBe(false);
 
@@ -73,9 +73,9 @@ describe('useTimeoutFn', () => {
     [, hook] = getHook();
 
     isReady = hook.result.current.isReady;
-    set = hook.result.current.set;
+    start = hook.result.current.start;
 
-    act(() => set());
+    act(() => start());
 
     jest.advanceTimersByTime(5);
 
@@ -84,9 +84,9 @@ describe('useTimeoutFn', () => {
 
   it('clear function should cancel timeout', () => {
     const [spy, hook] = getHook();
-    const { isReady, clear, set } = hook.result.current;
+    const { isReady, clear, start } = hook.result.current;
 
-    act(() => set());
+    act(() => start());
 
     expect(spy).not.toHaveBeenCalled();
     expect(isReady()).toBe(false);
@@ -104,7 +104,7 @@ describe('useTimeoutFn', () => {
   it('should clear timeout on delay change', () => {
     const [spy, hook] = getHook(50);
 
-    act(() => hook.result.current.set());
+    act(() => hook.result.current.start());
 
     expect(spy).not.toHaveBeenCalled();
 
@@ -117,7 +117,7 @@ describe('useTimeoutFn', () => {
   it('should NOT clear timeout on function change', () => {
     const [spy, hook] = getHook(50);
 
-    act(() => hook.result.current.set());
+    act(() => hook.result.current.start());
 
     jest.advanceTimersByTime(25);
 

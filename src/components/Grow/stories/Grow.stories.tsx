@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Grow } from '../Grow';
 
 export default {
-  title: 'Grow',
+  title: 'Components|Grow',
 };
 
 const actions = {

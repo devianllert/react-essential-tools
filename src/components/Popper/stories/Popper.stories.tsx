@@ -6,7 +6,7 @@ import { Popper } from '../Popper';
 import { Grow } from '../../Grow';
 
 export default {
-  title: 'Popper',
+  title: 'Components|Popper',
   decorators: [withKnobs],
 };
 
