@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-export type UseTimeoutFnReturn = {
+export type UseTimeoutFnState = {
   isReady: () => boolean | null;
   clear: () => void;
-  set: () => void;
+  start: () => void;
 };
 
 /**
@@ -15,19 +15,16 @@ export type UseTimeoutFnReturn = {
  * Reset function call will cancel previous timeout;
  * Timeout will NOT be clear on function change. It will be called within the timeout,
  * You have to clear it on your own when needed.
- *
- * @param fn - callback
- * @param ms - delay
  */
 
-export const useTimeoutFn = (fn: Function, ms = 0): UseTimeoutFnReturn => {
-  const ready = useRef<boolean | null>(false);
+export const useTimeoutFn = (fn: Function, ms = 0): UseTimeoutFnState => {
+  const ready = useRef<boolean | null>(null);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
   const callback = useRef(fn);
 
   const isReady = useCallback(() => ready.current, []);
 
-  const set = useCallback(() => {
+  const start = useCallback(() => {
     ready.current = false;
     if (timeout.current) clearTimeout(timeout.current);
 
@@ -47,7 +44,8 @@ export const useTimeoutFn = (fn: Function, ms = 0): UseTimeoutFnReturn => {
     callback.current = fn;
   }, [fn]);
 
-  useEffect(() => clear, [set, clear]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => clear, [ms]);
 
-  return { isReady, clear, set };
+  return { isReady, clear, start };
 };

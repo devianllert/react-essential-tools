@@ -12,22 +12,25 @@ You have to clear it on your own when needed.
 ## Example
 
 ```jsx
+import React from 'react';
+
 import { useTimeoutFn } from 'react-essential-tools';
 
-const Demo = () => {
-  const [state, setState] = React.useState('Not called yet');
+export const Basic = () => {
+  const [state, setState] = React.useState('Not started');
 
   function fn() {
     setState(`called at ${Date.now()}`);
   }
 
-  const [isReady, cancel, reset] = useTimeoutFn(fn, 5000);
-  const cancelButtonClick = useCallback(() => {
+  const { isReady, clear, start } = useTimeoutFn(fn, 5000);
+
+  const cancelButtonClick = React.useCallback(() => {
     if (isReady() === false) {
-      cancel();
-      setState(`cancelled`);
+      clear();
+      setState('cancelled');
     } else {
-      reset();
+      start();
       setState('Not called yet');
     }
   }, []);
@@ -36,10 +39,22 @@ const Demo = () => {
 
   return (
     <div>
-      <div>{readyState !== null ? 'Function will be called in 5 seconds' : 'Timer cancelled'}</div>
-      <button onClick={cancelButtonClick}>{readyState === false ? 'cancel' : 'restart'} timeout</button>
+      <div>{readyState === false && 'Function will be called in 5 seconds'}</div>
+      <div>{readyState === null && 'Timer not started or cancelled'}</div>
+      <div>{readyState === true && 'Timer ready'}</div>
+
+      <button type="button" onClick={cancelButtonClick}>
+        {readyState === false && 'cancel '}
+        {(readyState === null || readyState === true) && 'start '}
+        timeout
+      </button>
       <br />
-      <div>Function state: {readyState === false ? 'Pending' : readyState ? 'Called' : 'Cancelled'}</div>
+      <div>
+        Function state:
+        {readyState === false && 'Pending'}
+        {readyState === true && 'Called'}
+        {readyState === null && 'Not started or cancelled'}
+      </div>
       <div>{state}</div>
     </div>
   );
