@@ -7,7 +7,7 @@ import { on, off } from '../../utils/listeners';
  */
 
 export const useClickAway = <T extends Event = Event>(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   handler: (event: T) => void,
 ): void => {
   const savedCallback = useRef(handler);
