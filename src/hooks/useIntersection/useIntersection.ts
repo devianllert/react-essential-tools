@@ -11,6 +11,8 @@ export interface UseIntersectionOptions extends IntersectionObserverInit {
 
 /**
  * Hook to track the visibility of a functional component based on IntersectionVisible Observer.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
  */
 
 export const useIntersection = (

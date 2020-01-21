@@ -3,7 +3,7 @@ import { useEffect, useRef, RefObject } from 'react';
 import { on, off } from '../../utils/listeners';
 
 /**
- * Hook that triggers a callback when user clicks outside the target element.
+ * Hook that triggers a callback when the user clicks outside the target element.
  */
 
 export const useClickAway = <T extends Event = Event>(

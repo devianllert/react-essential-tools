@@ -4,6 +4,10 @@ import { useMountedState } from '../useMountedState';
 
 import { isClient } from '../../utils/isClient';
 
+/**
+ * Hook that tracks state of a CSS media query.
+ */
+
 export const useMedia = (query: string, defaultState = false): boolean => {
   const [state, setState] = useState(isClient ? (): boolean => window.matchMedia(query).matches : defaultState);
   const isMounted = useMountedState();

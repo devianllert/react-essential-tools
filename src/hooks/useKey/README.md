@@ -5,6 +5,7 @@ Hook that executes a `handler` when a keyboard key is used.
 ## Example
 
 ```jsx
+import React from 'react';
 import { useKey } from 'react-essential-tools';
 
 const Demo = () => {

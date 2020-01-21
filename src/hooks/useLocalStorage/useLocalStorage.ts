@@ -6,15 +6,10 @@ import {
   SetStateAction,
 } from 'react';
 
-// import { on, off } from '../../utils/listeners';
-
 /**
  * Sync state to local storage so that it persists through a page refresh.
  * Usage is similar to useState except we pass in a local storage key so
  * that we can default to that value on page load instead of the specified initial value.
- *
- * @param {String} key - key for local storage
- * @param {T} initialValue - initial value for local storage key
  */
 
 export const useLocalStorage = <T>(key: string, initialValue?: T): [T, Dispatch<SetStateAction<T>>] => {

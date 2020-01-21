@@ -5,6 +5,7 @@ Hook that tracks the changes in the intersection of a target element with an anc
 ## Example
 
 ```jsx
+import React from 'react';
 import { useIntersection } from 'react-essential-tools';
 
 const Demo = () => {

@@ -20,7 +20,8 @@ export type AsyncFn<T> = [
 ];
 
 /**
- * Hook that returns state and a callback for an async function or a function that returns a promise.
+ * Hook that returns state and a callback for an `async` function or a function that returns a promise.
+ * The state is of the same shape as `useAsync`.
  */
 
 export const useAsyncFn = <T>(

@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 
 /**
- * Hook that merges object changes into current state.
- *
- * @param initialState
+ * Hook that creates `setState` method which works similar to how
+ * `this.setState` works in class components. It merges object changes into
+ * current state.
  */
 
 export const useSetState = <T extends object>(

@@ -5,6 +5,7 @@ Hook that uses device's acceleration sensor to track its motions.
 ## Example
 
 ```jsx
+import React from 'react';
 import { useMotion } from 'react-essential-tools';
 
 const Demo = () => {

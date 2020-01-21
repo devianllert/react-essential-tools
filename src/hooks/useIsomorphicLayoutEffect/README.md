@@ -5,6 +5,7 @@
 ## Example
 
 ```jsx
+import React from 'react';
 import { useIsomorphicLayoutEffect } from 'react-essential-tools';
 
 const Demo = ({ value }) => {

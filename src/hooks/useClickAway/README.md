@@ -1,10 +1,11 @@
 # `useClickAway`
 
-Hook that triggers a callback when user clicks outside the target element.
+Hook that triggers a callback when the user clicks outside the target element.
 
 ## Example
 
 ```jsx
+import React from 'react';
 import { useClickAway } from 'react-essential-tools';
 
 const Demo = () => {
@@ -23,5 +24,3 @@ const Demo = () => {
   );
 };
 ```
-
-To optimize you can wrap handler in useCallback before passing it into this hook.

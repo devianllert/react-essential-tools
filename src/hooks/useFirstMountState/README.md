@@ -5,6 +5,7 @@ Hook that returns `true` if component is just mounted (on first render) and `fal
 ## Example
 
 ```jsx
+import React from 'react';
 import { useFirstMountState } from 'react-essential-tools';
 
 const Demo = () => {

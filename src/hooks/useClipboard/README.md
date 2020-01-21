@@ -1,10 +1,11 @@
 # `useClipboard`
 
-Hook for reading from and writing to the user's clipboard.
+Hook that read and write to the user's clipboard.
 
 ## Example
 
 ```jsx
+import React from 'react';
 import { useClipboard } from 'react-essential-tools';
 
 const Demo = () => {

@@ -5,6 +5,7 @@ Hook that add state history with undo/redo functionality
 ## Example
 
 ```jsx
+import React from 'react';
 import { useHistory } from 'react-essential-tools';
 
 const Demo = () => {
