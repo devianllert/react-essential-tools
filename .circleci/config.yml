@@ -5,44 +5,43 @@ jobs:
       - image: circleci/node:latest
 
     steps:
-      - checkout # special step to check out source code to working directory
+      - checkout
 
-      - restore_cache: # special step to restore the dependency cache
-        # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-        keys: 
-          - v1-repo-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          keys: 
+            - v1-repo-{{ checksum "package-lock.json" }}
 
       - run:
-        name: Install dependencies with NPM
-        command: npm install
+          name: Install dependencies with NPM
+          command: npm install
 
       - save_cache:
-        key: v1-repo-{{ checksum "package-lock.json" }}
-        paths:
-          - "node_modules"
+          key: v1-repo-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
 
       - run:
-        name: Linting
-        command: npm run lint
+          name: Linting
+          command: npm run lint
       
       - run:
-        name: Run tests
-        command: npm test
+          name: Run tests
+          command: npm test
 
       - store_artifacts: 
-        path: test-results
-        prefix: tests
+          path: test-results
+          prefix: tests
 
       - store_artifacts:
-        path: coverage
-        prefix: coverage
+          path: coverage
+          prefix: coverage
 
       - store_test_results:
-        path: test-results
+          path: test-results
       
       - run:
-        name: Building
-        command: npm run build
+          name: Building
+          command: npm run build
 
 workflows:
   version: 2
