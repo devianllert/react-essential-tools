@@ -4,9 +4,29 @@
   <a href="https://www.npmjs.com/package/react-essential-tools">
     <img src="https://img.shields.io/npm/v/react-essential-tools.svg" alt="npm package" />
   </a>
+  <a href="https://github.com/devianllert/react-essential-tools/issues">
+    <img src="https://img.shields.io/github/issues/devianllert/react-essential-tools.svg" alt="Issue Status" />
+  </a>
+    <a href="https://github.com/devianllert/react-essential-tools/issues">
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions welcome" />
+  </a>
 </div>
 
-<pre>npm i <a href="https://www.npmjs.com/package/react-essential-tools">react-essential-tools</a></pre>
+Collection of essential React Hooks and Components 
+
+# Features
+
+- Easy to learn and use.
+- Contains a wealth of useful Components.
+- Contains a wealth of advanced Hooks that are refined from the app.
+- Contains a wealth of basic Hooks.
+- Written in TypeScript.
+
+# Installation
+
+```
+npm i react-essential-tools
+```
 
 ## Components
 
@@ -53,3 +73,8 @@ You need to have React [`16.8.0`](https://reactjs.org/blog/2019/02/06/react-v16.
 ```js
 import { Tooltip } from 'react-essential-tools'
 ```
+
+## License
+
+This project is licensed under the MIT license, Copyright (c) 2019 Ruslan Povolockii.
+For more information see [`LICENSE.md`](./LICENCE).
