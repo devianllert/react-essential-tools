@@ -43,6 +43,10 @@ jobs:
           name: Building
           command: npm run build
 
+      - run:
+          name: Run codecov
+          command: npx codecov
+
 workflows:
   version: 2
   Build and Test:

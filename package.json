@@ -27,7 +27,8 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests --watchAll",
+    "test": "tsdx test --maxWorkers=2",
+    "test:watch": "tsdx test --watchAll",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
