@@ -1,8 +1,14 @@
 # react-essential-tools
 
 <div align="center">
+  <a href="https://circleci.com/gh/devianllert/react-essential-tools/">
+    <img src="https://circleci.com/gh/devianllert/react-essential-tools/tree/develop.svg?style=svg" alt="Build" />
+  </a>
+  <a href="https://circleci.com/gh/devianllert/react-essential-tools/">
+    <img src="https://codecov.io/gh/devianllert/react-essential-tools/branch/develop/graph/badge.svg" alt="Codecov" />
+  </a>
   <a href="https://www.npmjs.com/package/react-essential-tools">
-    <img src="https://img.shields.io/npm/v/react-essential-tools.svg" alt="npm package" />
+    <img src="https://img.shields.io/npm/v/react-essential-tools.svg" alt="NPM package" />
   </a>
   <a href="https://github.com/devianllert/react-essential-tools/issues">
     <img src="https://img.shields.io/github/issues/devianllert/react-essential-tools.svg" alt="Issue Status" />
@@ -10,6 +16,8 @@
     <a href="https://github.com/devianllert/react-essential-tools/issues">
     <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions welcome" />
   </a>
+  <br/>
+  <br/>
 </div>
 
 Collection of essential React Hooks and Components 
