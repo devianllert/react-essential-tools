@@ -1,5 +1,6 @@
 {
   "name": "react-essential-tools",
+  "description": "Collection of essential React Hooks and Components ",
   "version": "0.31.0",
   "repository": {
     "type": "git",
