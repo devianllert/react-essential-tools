@@ -4,9 +4,6 @@
   <a href="https://circleci.com/gh/devianllert/react-essential-tools/">
     <img src="https://circleci.com/gh/devianllert/react-essential-tools/tree/develop.svg?style=svg" alt="Build" />
   </a>
-  <a href="https://circleci.com/gh/devianllert/react-essential-tools/">
-    <img src="https://codecov.io/gh/devianllert/react-essential-tools/branch/develop/graph/badge.svg" alt="Codecov" />
-  </a>
   <a href="https://www.npmjs.com/package/react-essential-tools">
     <img src="https://img.shields.io/npm/v/react-essential-tools.svg" alt="NPM package" />
   </a>
