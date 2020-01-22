@@ -29,7 +29,9 @@
     "build": "tsdx build",
     "test": "tsdx test --maxWorkers=2",
     "test:watch": "tsdx test --watchAll",
-    "lint": "tsdx lint",
+    "lint": "npm run lint:eslint && npm run lint:css",
+    "lint:eslint": "tsdx lint src --fix",
+    "lint:css": "stylelint **/*.{ts,tsx}",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -40,14 +42,20 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint --fix"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.(ts|tsx)": [
+      "npm run lint",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
-    "@storybook/addon-knobs": "^5.3.4",
     "@storybook/addon-a11y": "^5.3.4",
     "@storybook/addon-actions": "^5.3.4",
+    "@storybook/addon-knobs": "^5.3.4",
     "@storybook/addon-links": "^5.3.4",
     "@storybook/addons": "^5.3.4",
     "@storybook/react": "^5.3.4",
@@ -67,8 +75,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "husky": "^4.0.10",
+    "husky": "^4.2.0",
     "jest-styled-components": "^7.0.0",
+    "lint-staged": "^10.0.2",
     "np": "5.1.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
