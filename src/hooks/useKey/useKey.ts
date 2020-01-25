@@ -1,31 +1,14 @@
 import { useMemo, useCallback } from 'react';
 
+import { matchKeyboardKey } from '../../utils/matchKeyboardKey';
+
 import { useEvent } from '../useEvent';
 
-export type UseKeyHandler = (event: KeyboardEvent) => void;
-
-export type UseKeyPredicate = (event: KeyboardEvent) => boolean;
-
-export interface UseKeyOptions {
+interface UseKeyOptions {
   event?: 'keydown' | 'keypress' | 'keyup';
   target?: EventTarget;
   options?: AddEventListenerOptions;
 }
-
-const matchKeyboardEvent = (
-  e: KeyboardEvent,
-  identifier: string | number,
-): boolean => {
-  if (
-    e.key === identifier
-    || e.code === identifier
-    || e.keyCode === identifier
-    || e.which === identifier
-    || e.charCode === identifier
-  ) return true;
-
-  return false;
-};
 
 /**
  * Hook that executes a handler when a keyboard key is used.
@@ -47,7 +30,7 @@ export const useKey = (
   }, [keys]);
 
   const handler = useCallback((handlerEvent: KeyboardEvent): void => {
-    if (keyList.some((key) => matchKeyboardEvent(handlerEvent, key))) {
+    if (keyList.some((key) => matchKeyboardKey(handlerEvent, key))) {
       fn(handlerEvent);
     }
   }, [keyList, fn]);
