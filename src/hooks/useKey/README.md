@@ -22,20 +22,18 @@ const Demo = () => {
 ```
 
 ```jsx
+import React from 'react';
 import { useKey } from 'react-essential-tools';
 
 const Demo = () => {
   const [count, set] = useState(0);
   const increment = () => set(count => ++count);
-  
-  const predicate = (event) => event.key === 'i'
-  useKey(predicate, increment, { event: 'keyup' });
+  useKey(['ArrowUp', '+'], increment, { event: 'keyup' });
 
   return (
     <div>
-      Press arrow up: {count}
+      Press arrow up or +: {count}
     </div>
   );
 };
-
 ```
