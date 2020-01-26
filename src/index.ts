@@ -31,3 +31,4 @@ export * from './hooks/useMotion';
 export * from './hooks/useMedia';
 export * from './hooks/useHistory';
 export * from './hooks/useHover';
+export * from './hooks/useLongPress';

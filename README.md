@@ -44,6 +44,7 @@ npm i react-essential-tools
 
 ## Hooks
 
+- [`useLongPress`](./src/hooks/useLongPress)
 - [`useHover`](./src/hooks/useHover)
 - [`useHistory`](./src/hooks/useHistory)
 - [`useMedia`](./src/hooks/useMedia)
