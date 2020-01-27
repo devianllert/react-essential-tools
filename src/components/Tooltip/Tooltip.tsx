@@ -319,6 +319,18 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
     }
     : {};
 
+  const popperOptions = React.useMemo(
+    () => ({
+      modifiers: {
+        arrow: {
+          enabled: Boolean(arrowRef),
+          element: arrowRef,
+        },
+      },
+    }),
+    [arrowRef],
+  );
+
   return (
     <>
       {React.cloneElement(children, { ref: handleRef, ...childrenProps })}
@@ -330,14 +342,7 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
         open={childNode ? open : false}
         id={childrenProps['aria-describedby']}
         transition
-        popperOptions={{
-          modifiers: {
-            arrow: {
-              enabled: Boolean(arrowRef),
-              element: arrowRef,
-            },
-          },
-        }}
+        popperOptions={popperOptions}
         {...interactiveWrapperListeners} // eslint-disable-line
         {...PopperProps} // eslint-disable-line
       >

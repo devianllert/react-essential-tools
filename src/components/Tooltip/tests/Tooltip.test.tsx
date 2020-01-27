@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
@@ -5,8 +6,8 @@ import {
   render,
   fireEvent,
   cleanup,
-  act,
 } from '@testing-library/react';
+import Popper from 'popper.js';
 
 import { Tooltip } from '../Tooltip';
 
@@ -28,10 +29,18 @@ jest.mock('popper.js', () => {
   };
 });
 
-jest.useFakeTimers();
-
 describe('<Tooltip />', () => {
-  afterEach(cleanup);
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   const defaultProps = {
     children: <span data-testid="children">Hello World</span>,
@@ -45,46 +54,46 @@ describe('<Tooltip />', () => {
       </Tooltip>,
     );
 
-    expect(getByTestId('children')).toBeDefined();
-    expect(getByTestId('children')).toHaveAttribute('title', 'test tooltip');
-    expect(getByTestId('children')).toHaveTextContent('Hello World');
+    const children = getByTestId('children');
+
+    expect(children).toBeDefined();
+    expect(children).toHaveAttribute('title', 'test tooltip');
+    expect(children).toHaveTextContent('Hello World');
   });
 
   it('should render tooltip when hover', () => {
-    const { getByTestId } = render(
+    const { getByTestId, queryByRole } = render(
       <Tooltip title={defaultProps.title}>
         {defaultProps.children}
       </Tooltip>,
     );
 
-    expect(document.querySelector('[role="tooltip"]')).not.toBeInTheDocument();
+    expect(queryByRole('tooltip')).not.toBeInTheDocument();
 
     fireEvent.mouseOver(getByTestId('children'));
 
-    expect(document.querySelector('[role="tooltip"]')).toBeInTheDocument();
-    expect(document.querySelector('[role="tooltip"]')).toHaveTextContent('test tooltip');
+    expect(queryByRole('tooltip')).toBeInTheDocument();
+    expect(queryByRole('tooltip')).toHaveTextContent('test tooltip');
   });
 
   it('should unmount tooltip when mouse leave', () => {
-    const { getByTestId } = render(
+    const { getByTestId, queryByRole } = render(
       <Tooltip title={defaultProps.title}>
         {defaultProps.children}
       </Tooltip>,
     );
 
-    expect(document.querySelector('[role="tooltip"]')).not.toBeInTheDocument();
+    expect(queryByRole('tooltip')).not.toBeInTheDocument();
 
     fireEvent.mouseOver(getByTestId('children'));
 
-    expect(document.querySelector('[role="tooltip"]')).toBeInTheDocument();
+    expect(queryByRole('tooltip')).toBeInTheDocument();
 
     fireEvent.mouseLeave(getByTestId('children'));
 
-    act(() => {
-      jest.runAllTimers();
-    });
+    jest.runAllTimers();
 
-    expect(document.querySelector('[role="tooltip"]')).not.toBeInTheDocument();
+    expect(queryByRole('tooltip')).not.toBeInTheDocument();
   });
 
   it('should ignore event from the tooltip', () => {
@@ -115,6 +124,7 @@ describe('<Tooltip />', () => {
         {defaultProps.children}
       </Tooltip>,
     );
+
     const children = getByTestId('children');
     expect(handleRequestOpen).not.toHaveBeenCalled();
     expect(handleClose).not.toHaveBeenCalled();
@@ -130,6 +140,51 @@ describe('<Tooltip />', () => {
 
     expect(handleRequestOpen).toHaveBeenCalledTimes(1);
     expect(handleClose).toHaveBeenCalled();
+  });
+
+  it('should use the same popper.js instance between two renders', () => {
+    const popperRef = React.createRef<Popper>();
+    const { rerender } = render(
+      <Tooltip
+        title={defaultProps.title}
+        open
+        PopperProps={{
+          popperRef,
+        }}
+      >
+        {defaultProps.children}
+      </Tooltip>,
+    );
+
+    const firstPopperInstance = popperRef.current;
+
+    rerender(
+      <Tooltip
+        title={defaultProps.title}
+        open
+        PopperProps={{
+          popperRef,
+        }}
+      >
+        <span>Hello World!!!</span>
+      </Tooltip>,
+    );
+    expect(firstPopperInstance).toEqual(popperRef.current);
+  });
+
+  it('should ignore event from the tooltip', () => {
+    const handleMouseOver = jest.fn();
+    const { getByRole } = render(
+      <Tooltip {...defaultProps} open interactive>
+        <button type="submit" onMouseOver={handleMouseOver}>
+          Hello World
+        </button>
+      </Tooltip>,
+    );
+
+    fireEvent.mouseOver(getByRole('tooltip'));
+
+    expect(handleMouseOver).toHaveBeenCalledTimes(0);
   });
 
   describe('mount', () => {
@@ -152,23 +207,23 @@ describe('<Tooltip />', () => {
 
   describe('prop: title', () => {
     it('should display if the title is present', () => {
-      render(
+      const { getByRole } = render(
         <Tooltip title={defaultProps.title} open>
           {defaultProps.children}
         </Tooltip>,
       );
 
-      expect(document.querySelector('[role="tooltip"]')).toBeInTheDocument();
+      expect(getByRole('tooltip')).toBeInTheDocument();
     });
 
     it('should not display if the title is an empty string', () => {
-      render(
+      const { queryByRole } = render(
         <Tooltip title="" open>
           {defaultProps.children}
         </Tooltip>,
       );
 
-      expect(document.querySelector('[role="tooltip"]')).not.toBeInTheDocument();
+      expect(queryByRole('tooltip')).toBeNull();
     });
 
     it('should be passed down to the child as a native title', () => {
@@ -178,13 +233,13 @@ describe('<Tooltip />', () => {
         </Tooltip>,
       );
 
-      expect(getByRole('button').getAttribute('title')).toEqual('Hello World');
+      expect(getByRole('button')).toHaveAttribute('title', 'Hello World');
     });
   });
 
   describe('touch screen', () => {
     it('should not respond to quick events', () => {
-      const { getByTestId } = render(
+      const { getByTestId, queryByRole } = render(
         <Tooltip title={defaultProps.title}>
           {defaultProps.children}
         </Tooltip>,
@@ -194,11 +249,11 @@ describe('<Tooltip />', () => {
       fireEvent.touchStart(children);
       fireEvent.touchEnd(children);
 
-      expect(document.querySelector('[role="tooltip"]')).not.toBeInTheDocument();
+      expect(queryByRole('tooltip')).toBeNull();
     });
 
     it('should open on long press', () => {
-      const { getByTestId } = render(
+      const { getByTestId, getByRole, queryByRole } = render(
         <Tooltip title={defaultProps.title}>
           {defaultProps.children}
         </Tooltip>,
@@ -209,19 +264,19 @@ describe('<Tooltip />', () => {
       fireEvent.touchStart(children);
 
       jest.advanceTimersByTime(1000);
-      expect(document.querySelector('[role="tooltip"]')).toBeInTheDocument();
+      expect(getByRole('tooltip')).toBeInTheDocument();
 
       fireEvent.touchEnd(children);
       fireEvent.blur(children);
 
       jest.advanceTimersByTime(1500);
-      expect(document.querySelector('[role="tooltip"]')).not.toBeInTheDocument();
+      expect(queryByRole('tooltip')).toBeNull();
     });
   });
 
   describe('prop: interactive', () => {
     it('should keep the overlay open if the popper element is hovered', () => {
-      const { getByTestId } = render(
+      const { getByTestId, getByRole } = render(
         <Tooltip title="Hello World" interactive leaveDelay={111}>
           <button data-testid="button" type="submit">
             Hello World
@@ -234,16 +289,186 @@ describe('<Tooltip />', () => {
       fireEvent.mouseOver(children);
       jest.advanceTimersByTime(0);
 
-      expect(document.querySelector('[role="tooltip"]')!).toBeInTheDocument();
+      expect(getByRole('tooltip')).toBeInTheDocument();
 
       fireEvent.mouseLeave(children);
-      expect(document.querySelector('[role="tooltip"]')!).toBeInTheDocument();
+      expect(getByRole('tooltip')).toBeInTheDocument();
 
-      fireEvent.mouseOver(document.querySelector('[role="tooltip"]')!);
+      fireEvent.mouseOver(getByRole('tooltip'));
 
       jest.advanceTimersByTime(111);
 
-      expect(document.querySelector('[role="tooltip"]')!).toBeInTheDocument();
+      expect(getByRole('tooltip')).toBeInTheDocument();
+    });
+  });
+
+  describe('prop: overrides', () => {
+    it('should be transparent for the onMouseEnter event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onMouseEnter={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.mouseEnter(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be transparent for the onMouseLeave event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onMouseLeave={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.mouseLeave(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be transparent for the onMouseOver event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onMouseOver={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.mouseOver(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be transparent for the onTouchStart event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onTouchStart={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.touchStart(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be transparent for the onTouchEnd event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onTouchEnd={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.touchEnd(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be transparent for the onFocus event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onFocus={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.focus(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be transparent for the onBlur event', () => {
+      const handler = jest.fn();
+      const { getByTestId } = render(
+        <Tooltip title="Hello World">
+          <button data-testid="button" type="submit" onBlur={handler}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      const children = getByTestId('button');
+
+      fireEvent.blur(children);
+
+      jest.advanceTimersByTime(0);
+
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('focus', () => {
+    function Test() {
+      return (
+        <Tooltip enterDelay={0} leaveDelay={0} title="Some information">
+          <button data-testid="target" type="button">
+            Do something
+          </button>
+        </Tooltip>
+      );
+    }
+
+    it('ignores base focus', () => {
+      const { getByTestId, queryByRole } = render(<Test />);
+      document.dispatchEvent(new window.Event('pointerdown'));
+
+      expect(queryByRole('tooltip')).toBeNull();
+
+      fireEvent.focus(getByTestId('target'));
+
+      expect(queryByRole('tooltip')).toBeNull();
+    });
+
+    it('opens on focus-visible', () => {
+      const { getByTestId, queryByRole } = render(<Test />);
+      document.dispatchEvent(new window.Event('pointerdown'));
+
+      expect(queryByRole('tooltip')).toBeNull();
+
+      document.dispatchEvent(new window.Event('keydown'));
+
+      fireEvent.focus(getByTestId('target'));
+      expect(queryByRole('tooltip')).toBeInTheDocument();
     });
   });
 
@@ -279,7 +504,7 @@ describe('<Tooltip />', () => {
 
       fireEvent.mouseEnter(getByRole('button'));
 
-      expect(document.querySelector('[role="tooltip"]')).toMatchSnapshot();
+      expect(getByRole('tooltip')).toMatchSnapshot();
     });
   });
 });
