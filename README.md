@@ -39,6 +39,7 @@ npm i react-essential-tools
 - [`NoSsr`](./src/components/NoSsr)
 - [`Tooltip`](./src/components/Tooltip)
 - [`Popper`](./src/components/Popper)
+- [`Fade`](./src/components/Grow)
 - [`Grow`](./src/components/Grow)
 - [`Portal`](./src/components/Portal)
 
