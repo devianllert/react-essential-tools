@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 import Popper from 'popper.js';
 
-import { Tooltip } from '../Tooltip';
+import { Tooltip, resetHystersis } from '../Tooltip';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -35,6 +35,7 @@ describe('<Tooltip />', () => {
   });
 
   afterEach(() => {
+    resetHystersis();
     cleanup();
   });
 
@@ -271,6 +272,59 @@ describe('<Tooltip />', () => {
 
       jest.advanceTimersByTime(1500);
       expect(queryByRole('tooltip')).toBeNull();
+    });
+  });
+
+  describe('prop: delay', () => {
+    it('should take the enterDelay into account', () => {
+      const { getByTestId, queryByRole } = render(
+        <Tooltip title={defaultProps.title} enterDelay={111}>
+          {defaultProps.children}
+        </Tooltip>,
+      );
+
+      document.dispatchEvent(new window.Event('pointerdown'));
+
+      const children = getByTestId('children');
+
+      document.dispatchEvent(new window.Event('keydown'));
+      fireEvent.focus(children);
+
+      expect(queryByRole('tooltip')).toBeNull();
+
+      jest.advanceTimersByTime(111);
+      expect(queryByRole('tooltip')).toBeInTheDocument();
+    });
+
+    it('should use hysteresis with the enterDelay', () => {
+      const { getByTestId, queryByRole } = render(
+        <Tooltip
+          title={defaultProps.title}
+          enterDelay={111}
+          leaveDelay={5}
+          TransitionProps={{ timeout: 6 }}
+        >
+          {defaultProps.children}
+        </Tooltip>,
+      );
+
+      const children = getByTestId('children');
+
+      fireEvent.focus(children);
+      expect(queryByRole('tooltip')).toBeNull();
+
+      jest.advanceTimersByTime(111);
+      expect(queryByRole('tooltip')).toBeInTheDocument();
+
+      fireEvent.blur(children);
+
+      jest.advanceTimersByTime(5);
+      jest.advanceTimersByTime(6);
+
+      expect(queryByRole('tooltip')).toBeNull();
+
+      fireEvent.focus(children);
+      expect(queryByRole('tooltip')).toBeInTheDocument();
     });
   });
 

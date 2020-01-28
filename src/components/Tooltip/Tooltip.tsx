@@ -56,6 +56,14 @@ const StyledPopper = styled(Popper)<StyledPopperProps>`
   pointer-events: ${(props): string => (props.interactive ? 'auto' : 'none')};
 `;
 
+let hystersisOpen = false;
+let hystersisTimer: number | undefined;
+
+export const resetHystersis = (): void => {
+  hystersisOpen = false;
+  hystersisTimer = undefined;
+};
+
 export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.ReactInstance>): React.ReactElement => {
   const {
     arrow = false,
@@ -118,9 +126,7 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
     // Fallback to this default id when possible.
     // Use the random value for client-side rendering only.
     // We can't use it server-side.
-    if (!defaultId) {
-      setDefaultId(`tooltip-${Math.round(Math.random() * 1e5)}`);
-    }
+    setDefaultId(`tooltip-${Math.round(Math.random() * 1e5)}`);
   }, [isControlled, defaultId]);
 
   React.useEffect(
@@ -134,12 +140,13 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
   );
 
   const handleOpen = (event: React.ChangeEvent): void => {
+    clearTimeout(hystersisTimer);
+    hystersisOpen = true;
+
     // The mouseover event will trigger for every nested element in the tooltip.
     // We can skip rerendering when the tooltip is already open.
     // We are using the mouseover event instead of the mouseenter event to fix a hide/show issue.
-    if (!isControlled && !openState) {
-      setOpenState(true);
-    }
+    setOpenState(true);
 
     if (onOpen) {
       onOpen(event);
@@ -167,7 +174,7 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
     clearTimeout(enterTimer.current);
     clearTimeout(leaveTimer.current);
 
-    if (enterDelay) {
+    if (enterDelay && !hystersisOpen) {
       event.persist();
 
       enterTimer.current = window.setTimeout(() => {
@@ -205,9 +212,12 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
   };
 
   const handleClose = (event: React.ChangeEvent): void => {
-    if (!isControlled) {
-      setOpenState(false);
-    }
+    clearTimeout(hystersisTimer);
+    hystersisTimer = setTimeout(() => {
+      hystersisOpen = false;
+    }, 500);
+
+    setOpenState(false);
 
     if (onClose) {
       onClose(event);
