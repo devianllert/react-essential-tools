@@ -1,6 +1,7 @@
 export * from './components/Portal';
 export * from './components/Grow';
 export * from './components/Fade';
+export * from './components/Slide';
 export * from './components/Popper';
 export * from './components/Tooltip';
 export * from './components/NoSsr';
