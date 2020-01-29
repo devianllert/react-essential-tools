@@ -1,12 +1,13 @@
 # `useSetState`
 
-React state hook that creates `setState` method which works similar to how
-`this.setState` works in class components&mdash;it merges object changes into
+Hook that creates `setState` method which works similar to how
+`this.setState` works in class components. It merges object changes into
 current state.
 
 ## Example
 
 ```jsx
+import React from 'react';
 import { useSetState } from 'react-essential-tools';
 
 const Demo = () => {

@@ -5,6 +5,7 @@ Hook that ignores the first invocation (e.g. on mount). The signature is exactly
 ## Example
 
 ```jsx
+import React from 'react';
 import { useUpdateEffect } from 'react-essential-tools';
 
 const Demo = () => {

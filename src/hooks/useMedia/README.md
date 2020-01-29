@@ -5,6 +5,7 @@ Hook that tracks state of a CSS media query.
 ## Example
 
 ```jsx
+import React from 'react';
 import { useMedia } from 'react-essential-tools';
 
 const Demo = () => {

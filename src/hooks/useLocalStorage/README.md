@@ -7,6 +7,7 @@ that we can default to that value on page load instead of the specified initial 
 ## Example
 
 ```jsx
+import React from 'react';
 import { useLocalStorage } from 'react-essential-tools';
 
 const Demo = () => {

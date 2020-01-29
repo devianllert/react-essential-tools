@@ -6,6 +6,7 @@ Useful for example to store a prop and compare it to the newest value.
 ## Example
 
 ```jsx
+import React from 'react';
 import { usePrevious } from 'react-essential-tools';
 
 const Demo = () => {

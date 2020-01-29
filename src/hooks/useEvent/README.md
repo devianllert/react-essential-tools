@@ -5,6 +5,7 @@ Hook that subscribes a `handler` to events.
 ## Example
 
 ```jsx
+import React from 'react';
 import { useEvent, useBoolean } from 'react-essential-tools';
 
 const Demo = () => {

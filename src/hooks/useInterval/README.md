@@ -6,6 +6,7 @@ The interval can be paused by setting the delay to `null`.
 ## Example
 
 ```jsx
+import React from 'react';
 import { useInterval } from 'react-essential-tools';
 
 const Demo = () => {

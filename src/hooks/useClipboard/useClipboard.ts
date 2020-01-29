@@ -81,7 +81,7 @@ const write = (text: string): Promise<void> => new Promise((resolve, reject): vo
 });
 
 /**
- * Hook for reading from and writing to the user's clipboard.
+ * Hook that read and write to the user's clipboard.
  */
 
 export const useClipboard = (): UseClipboardState => {

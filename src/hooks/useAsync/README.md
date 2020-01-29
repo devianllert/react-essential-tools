@@ -5,6 +5,7 @@ Hook that resolves an `async` function or a function that returns a promise
 ## Example
 
 ```jsx
+import React from 'react';
 import { useAsync } from 'react-essential-tools';
 
 const Demo = ({ url }) => {

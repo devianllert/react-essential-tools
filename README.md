@@ -1,24 +1,62 @@
 # react-essential-tools
 
 <div align="center">
-  <a href="https://www.npmjs.com/package/react-essential-tools">
-    <img src="https://img.shields.io/npm/v/react-essential-tools.svg" alt="npm package" />
+  <a href="https://circleci.com/gh/devianllert/react-essential-tools/">
+    <img src="https://circleci.com/gh/devianllert/react-essential-tools/tree/develop.svg?style=svg" alt="Build" />
   </a>
+  <a href="https://www.npmjs.com/package/react-essential-tools">
+    <img src="https://img.shields.io/npm/v/react-essential-tools.svg" alt="NPM package" />
+  </a>
+  <a href="https://github.com/devianllert/react-essential-tools/issues">
+    <img src="https://img.shields.io/github/issues/devianllert/react-essential-tools.svg" alt="Issue Status" />
+  </a>
+    <a href="https://github.com/devianllert/react-essential-tools/issues">
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions welcome" />
+  </a>
+  <br/>
+  <br/>
 </div>
 
-<pre>npm i <a href="https://www.npmjs.com/package/react-essential-tools">react-essential-tools</a></pre>
+Collection of essential React Hooks and Components 
 
-## Components
+# Features
+
+- Easy to learn and use.
+- Contains a wealth of useful Components.
+- Contains a wealth of advanced Hooks that are refined from the app.
+- Contains a wealth of basic Hooks.
+- Written in TypeScript.
+
+## Installation
+
+```
+npm i react-essential-tools
+```
+
+## Usage
+
+You need to have React [`16.8.0`](https://reactjs.org/blog/2019/02/06/react-v16.8.0.html) or later installed to use the Hooks API. You can import each hook or component using ES6 named imports (tree shaking recommended).
+
+```js
+import { Tooltip, useAsync } from 'react-essential-tools'
+```
+
+### Components
 
 - [`Skeleton`](./src/components/Skeleton)
 - [`NoSsr`](./src/components/NoSsr)
 - [`Tooltip`](./src/components/Tooltip)
 - [`Popper`](./src/components/Popper)
+- [`Collapse`](./src/components/Collapse)
+- [`Slide`](./src/components/Slide)
+- [`Zoom`](./src/components/Zoom)
+- [`Fade`](./src/components/Fade)
 - [`Grow`](./src/components/Grow)
 - [`Portal`](./src/components/Portal)
 
-## Hooks
+### Hooks
 
+- [`useLongPress`](./src/hooks/useLongPress)
 - [`useHover`](./src/hooks/useHover)
 - [`useHistory`](./src/hooks/useHistory)
 - [`useMedia`](./src/hooks/useMedia)
@@ -46,10 +84,7 @@
 - [`useMountedState`](./src/hooks/useMountedState)
 - [`useIsomorphicLayoutEffect`](./src/hooks/useIsomorphicLayoutEffect)
 
-## Usage
+## License
 
-You need to have React [`16.8.0`](https://reactjs.org/blog/2019/02/06/react-v16.8.0.html) or later installed to use the Hooks API. You can import each hook or component using ES6 named imports (tree shaking recommended).
-
-```js
-import { Tooltip } from 'react-essential-tools'
-```
+This project is licensed under the MIT license, Copyright (c) 2019 Ruslan Povolockii.
+For more information see [`LICENSE.md`](./LICENCE.md).

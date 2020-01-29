@@ -1,10 +1,11 @@
 # `useBoolean`
 
-React state hook that tracks value of a boolean.
+Hook that tracks value of a boolean.
 
 ## Example
 
 ```jsx
+import React from 'react';
 import { useBoolean } from 'react-essential-tools';
 
 const Demo = () => {

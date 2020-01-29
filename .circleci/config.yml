@@ -1,0 +1,54 @@
+version: 2 # use CircleCI 2.0
+jobs:
+  build: 
+    docker:
+      - image: circleci/node:latest
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys: 
+            - v1-repo-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Install dependencies with NPM
+          command: npm install
+
+      - save_cache:
+          key: v1-repo-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
+
+      - run:
+          name: Linting
+          command: npm run lint
+      
+      - run:
+          name: Run tests
+          command: npm test
+
+      - store_artifacts: 
+          path: test-results
+          prefix: tests
+
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+
+      - store_test_results:
+          path: test-results
+      
+      - run:
+          name: Building
+          command: npm run build
+
+      - run:
+          name: Run codecov
+          command: npx codecov
+
+workflows:
+  version: 2
+  Build and Test:
+    jobs:
+      - build

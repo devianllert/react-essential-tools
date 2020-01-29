@@ -1,5 +1,10 @@
 {
-  "include": ["src", "types", "test"],
+  "include": ["src"],
+  "exclude": [
+    "**/tests/*.test.ts",
+    "**/tests/*.test.tsx",
+    "**/stories/*.stories.tsx",
+  ],
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",

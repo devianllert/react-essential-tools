@@ -5,6 +5,7 @@ Hook that re-render on mouse position changes.
 ## Example
 
 ```jsx
+import React from 'react';
 import { useMouse } from 'react-essential-tools';
 
 const Demo = () => {

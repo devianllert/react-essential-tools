@@ -5,6 +5,7 @@ Hook that returns state and a callback for an `async` function or a function tha
 ## Example
 
 ```jsx
+import React from 'react';
 import { useAsyncFn } from 'react-essential-tools';
 
 const Demo = ({ url }) => {

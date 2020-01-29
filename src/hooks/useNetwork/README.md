@@ -5,6 +5,7 @@ Hook that returns network information
 ## Example
 
 ```jsx
+import React from 'react';
 import { useNetwork } from 'react-essential-tools';
 
 const Demo = () => {

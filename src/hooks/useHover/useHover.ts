@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 
 interface UseHoverEvents {
   onMouseEnter: () => void;
@@ -10,7 +10,7 @@ interface UseHoverEvents {
  */
 
 export const useHover = (): [boolean, UseHoverEvents] => {
-  const [state, setState] = React.useState(false);
+  const [state, setState] = useState(false);
 
   const onMouseEnter = (): void => setState(true);
   const onMouseLeave = (): void => setState(false);

@@ -5,8 +5,7 @@ Hook that track if element is being hovered by a mouse.
 # Example
 
 ```jsx
-import * as React from 'react';
-
+import React from 'react';
 import { useHover } from 'react-essential-tools';
 
 const Demo = () => {

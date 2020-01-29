@@ -1,5 +1,9 @@
 export * from './components/Portal';
 export * from './components/Grow';
+export * from './components/Fade';
+export * from './components/Zoom';
+export * from './components/Slide';
+export * from './components/Collapse';
 export * from './components/Popper';
 export * from './components/Tooltip';
 export * from './components/NoSsr';
@@ -31,3 +35,4 @@ export * from './hooks/useMotion';
 export * from './hooks/useMedia';
 export * from './hooks/useHistory';
 export * from './hooks/useHover';
+export * from './hooks/useLongPress';

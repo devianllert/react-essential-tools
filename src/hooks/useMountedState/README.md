@@ -6,7 +6,7 @@ Gives a function that will return `true` if component mounted and `false` otherw
 ## Example
 
 ```jsx
-import * as React from 'react';
+import React from 'react';
 import { useMountedState } from 'react-essential-tools';
 
 const Demo = () => {

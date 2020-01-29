@@ -2,9 +2,6 @@ import { useEffect, useRef } from 'react';
 
 /**
  * Hook that called callback every delay milliseconds.
- *
- * @param callback - A function that will be called every delay milliseconds.
- * @param delay - A number representing the delay in msecs. Set to null to "pause" the interval.
  */
 
 export const useInterval = (callback: Function, delay: number | null = 200): void => {
