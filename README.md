@@ -40,6 +40,7 @@ npm i react-essential-tools
 - [`Tooltip`](./src/components/Tooltip)
 - [`Popper`](./src/components/Popper)
 - [`Slide`](./src/components/Slide)
+- [`Zoom`](./src/components/Zoom)
 - [`Fade`](./src/components/Fade)
 - [`Grow`](./src/components/Grow)
 - [`Portal`](./src/components/Portal)
