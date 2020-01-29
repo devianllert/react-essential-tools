@@ -87,4 +87,4 @@ import { Tooltip, useAsync } from 'react-essential-tools'
 ## License
 
 This project is licensed under the MIT license, Copyright (c) 2019 Ruslan Povolockii.
-For more information see [`LICENSE.md`](./LICENCE).
+For more information see [`LICENSE.md`](./LICENCE.md).
