@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-arrow-callback */
-import React from 'react';
+import * as React from 'react';
 import { Transition } from 'react-transition-group';
 
 import {

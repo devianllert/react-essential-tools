@@ -3,6 +3,7 @@ export * from './components/Grow';
 export * from './components/Fade';
 export * from './components/Zoom';
 export * from './components/Slide';
+export * from './components/Collapse';
 export * from './components/Popper';
 export * from './components/Tooltip';
 export * from './components/NoSsr';

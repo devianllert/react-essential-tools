@@ -39,6 +39,7 @@ npm i react-essential-tools
 - [`NoSsr`](./src/components/NoSsr)
 - [`Tooltip`](./src/components/Tooltip)
 - [`Popper`](./src/components/Popper)
+- [`Collapse`](./src/components/Collapse)
 - [`Slide`](./src/components/Slide)
 - [`Zoom`](./src/components/Zoom)
 - [`Fade`](./src/components/Fade)
