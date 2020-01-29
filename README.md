@@ -27,13 +27,21 @@ Collection of essential React Hooks and Components
 - Contains a wealth of basic Hooks.
 - Written in TypeScript.
 
-# Installation
+## Installation
 
 ```
 npm i react-essential-tools
 ```
 
-## Components
+## Usage
+
+You need to have React [`16.8.0`](https://reactjs.org/blog/2019/02/06/react-v16.8.0.html) or later installed to use the Hooks API. You can import each hook or component using ES6 named imports (tree shaking recommended).
+
+```js
+import { Tooltip, useAsync } from 'react-essential-tools'
+```
+
+### Components
 
 - [`Skeleton`](./src/components/Skeleton)
 - [`NoSsr`](./src/components/NoSsr)
@@ -46,7 +54,7 @@ npm i react-essential-tools
 - [`Grow`](./src/components/Grow)
 - [`Portal`](./src/components/Portal)
 
-## Hooks
+### Hooks
 
 - [`useLongPress`](./src/hooks/useLongPress)
 - [`useHover`](./src/hooks/useHover)
@@ -75,14 +83,6 @@ npm i react-essential-tools
 - [`useFirstMountState`](./src/hooks/useFirstMountState)
 - [`useMountedState`](./src/hooks/useMountedState)
 - [`useIsomorphicLayoutEffect`](./src/hooks/useIsomorphicLayoutEffect)
-
-## Usage
-
-You need to have React [`16.8.0`](https://reactjs.org/blog/2019/02/06/react-v16.8.0.html) or later installed to use the Hooks API. You can import each hook or component using ES6 named imports (tree shaking recommended).
-
-```js
-import { Tooltip } from 'react-essential-tools'
-```
 
 ## License
 
