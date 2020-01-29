@@ -66,7 +66,7 @@ function getTranslateValue(direction: Props['direction'], node: HTMLElement): st
   return `translateY(-${rect.top + rect.height - offsetY}px)`;
 }
 
-export function setTranslateValue(direction: Props['direction'], node: HTMLElement): void {
+function setTranslateValue(direction: Props['direction'], node: HTMLElement): void {
   const transform = getTranslateValue(direction, node);
 
   if (transform) {
