@@ -30,6 +30,10 @@ const wave = keyframes`
     transform: translateX(-100%);
   }
 
+  60% {
+    transform: translateX(100%),
+  }
+
   100% {
     transform: translateX(100%);
   }
@@ -74,8 +78,8 @@ const SkeletonBox = styled.div<Props>`
 
         &::after {
           content: "";
-          animation: ${wave} 1.5s linear 0.5s infinite;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          animation: ${wave} 1.6s linear 0.5s infinite;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
           position: absolute;
           bottom: 0;
           left: 0;
@@ -92,7 +96,7 @@ export const Skeleton = React.forwardRef((props: Props, ref: React.Ref<HTMLEleme
   const {
     animation = 'pulse',
     className,
-    component = 'div',
+    component = 'span',
     height,
     variant = 'text',
     width,
