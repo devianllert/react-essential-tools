@@ -78,6 +78,7 @@ const SkeletonBox = styled.div<Props>`
 
         &::after {
           content: "";
+          transform: translateX(-100%);
           animation: ${wave} 1.6s linear 0.5s infinite;
           background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
           position: absolute;

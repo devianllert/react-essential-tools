@@ -1,13 +1,26 @@
-import { useState, useEffect, RefObject } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 
-export interface UseIntersectionState {
+interface UseIntersectionState {
   inView: boolean;
   entry?: IntersectionObserverEntry;
 }
 
-export interface UseIntersectionOptions extends IntersectionObserverInit {
+interface UseIntersectionOptions extends IntersectionObserverInit {
   triggerOnce?: boolean;
 }
+
+type UseIntersectionReturn = [(node: Element) => void, UseIntersectionState];
+
+const defaultOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 1,
+};
 
 /**
  * Hook to track the visibility of a functional component based on IntersectionVisible Observer.
@@ -15,38 +28,40 @@ export interface UseIntersectionOptions extends IntersectionObserverInit {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
  */
 
-export const useIntersection = (
-  ref: RefObject<HTMLElement>,
-  options: UseIntersectionOptions,
-): UseIntersectionState => {
+export const useIntersection = (options: UseIntersectionOptions = defaultOptions): UseIntersectionReturn => {
+  const element = useRef<Element>();
   const [state, setState] = useState<UseIntersectionState>({
     inView: false,
     entry: undefined,
   });
 
+  const callbackRef = useCallback((node: Element) => {
+    element.current = node;
+  }, []);
+
   useEffect(() => {
-    const element = ref.current;
+    const observer = new IntersectionObserver(([entry]): void => {
+      setState({
+        inView: entry.isIntersecting,
+        entry,
+      });
 
-    const observer = new IntersectionObserver(
-      ([entry]): void => {
-        setState({
-          inView: entry.isIntersecting,
-          entry,
-        });
-      },
-      options,
-    );
+      if (entry.isIntersecting && options.triggerOnce) {
+        observer.unobserve(entry.target);
+      }
+    }, options);
 
-    if (element) {
-      observer.observe(element);
+    if (element.current) {
+      observer.observe(element.current);
     }
 
     return (): void => {
-      if (element) {
-        observer.unobserve(element);
+      if (element.current) {
+        observer.unobserve(element.current);
       }
     };
-  }, [ref, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options.root, options.rootMargin, options.threshold, options.triggerOnce]);
 
-  return state;
+  return [callbackRef, state];
 };
