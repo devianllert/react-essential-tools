@@ -58,7 +58,7 @@
     "@storybook/addon-links": "^5.3.9",
     "@storybook/addons": "^5.3.9",
     "@storybook/react": "^5.3.9",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.1.1",
@@ -93,6 +93,6 @@
   "dependencies": {
     "popper.js": "^1.16.0",
     "react-transition-group": "^4.3.0",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.1"
   }
 }
