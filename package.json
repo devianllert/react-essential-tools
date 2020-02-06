@@ -27,7 +27,7 @@
   "scripts": {
     "start": "npm run storybook",
     "build": "tsdx build",
-    "test": "tsdx test --maxWorkers=2",
+    "test": "tsdx test --maxWorkers=2 --verbose",
     "test:watch": "tsdx test --watchAll",
     "lint": "npm run lint:eslint && npm run lint:css",
     "lint:eslint": "tsdx lint src --fix",
