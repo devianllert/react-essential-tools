@@ -56,6 +56,7 @@ import { Tooltip, useAsync } from 'react-essential-tools'
 
 ### Hooks
 
+- [`useDebouncedCallback`](./src/hooks/useDebouncedCallback)
 - [`useLongPress`](./src/hooks/useLongPress)
 - [`useHover`](./src/hooks/useHover)
 - [`useHistory`](./src/hooks/useHistory)
