@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 `;
 
 const WrapperInner = styled.div`
-  width: '100%';
+  width: 100%;
 `;
 
 export const Collapse = React.forwardRef(function Collapse(props: Props, ref: React.Ref<React.ReactInstance>) {
