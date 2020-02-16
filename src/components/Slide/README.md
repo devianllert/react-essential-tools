@@ -1,5 +1,7 @@
 # `Slide`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-slide--basic)
+
 Slide in from the edge of the screen. The `direction` property controls which edge of the screen the transition starts from.
 
 # Example

@@ -1,5 +1,7 @@
 # `useMotion`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usemotion--basic)
+
 Hook that uses device's acceleration sensor to track its motions.
 
 ## Example

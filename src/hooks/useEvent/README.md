@@ -1,5 +1,7 @@
 # `useEvent`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useevent--basic)
+
 Hook that subscribes a `handler` to events.
 
 ## Example

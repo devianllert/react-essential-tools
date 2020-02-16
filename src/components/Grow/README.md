@@ -1,5 +1,7 @@
 # `Grow`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-grow--basic)
+
 Grow component expand outwards from the center of the child element, while also fading in from transparent to opaque.
 
 # Example

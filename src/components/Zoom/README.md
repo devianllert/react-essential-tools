@@ -1,5 +1,7 @@
 # `Zoom`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-zoom--basic)
+
 Zoom component expand outwards from the center of the child element.
 
 # Example
