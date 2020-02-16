@@ -1,5 +1,7 @@
 # `useClickAway`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useclickaway--basic)
+
 Hook that triggers a callback when the user clicks outside the target element.
 
 ## Example

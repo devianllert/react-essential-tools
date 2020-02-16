@@ -1,5 +1,7 @@
 # `useLongPress`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-uselongpress--basic)
+
 Hook that fires a callback after long pressing.
 
 ## Usage

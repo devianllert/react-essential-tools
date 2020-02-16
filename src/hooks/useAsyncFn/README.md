@@ -1,5 +1,7 @@
 # `useAsyncFn`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useasyncfn--basic)
+
 Hook that returns state and a callback for an `async` function or a function that returns a promise. The state is of the same shape as `useAsync`.
 
 ## Example

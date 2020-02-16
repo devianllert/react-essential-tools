@@ -1,5 +1,7 @@
 # `useMouse`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usemouse--basic)
+
 Hook that re-render on mouse position changes.
 
 ## Example

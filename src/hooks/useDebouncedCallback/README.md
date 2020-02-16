@@ -1,5 +1,7 @@
 # `useDebouncedCallback`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usedebouncedcallback--basic)
+
 Hook that delays invoking a function until after wait milliseconds have elapsed since the last time the debounced function was invoked.
 
 # Example

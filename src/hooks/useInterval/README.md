@@ -1,5 +1,7 @@
 # `useInterval`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useinterval--basic)
+
 Hook that called callback every delay milliseconds.
 The interval can be paused by setting the delay to `null`.
 

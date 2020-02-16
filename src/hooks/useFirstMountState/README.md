@@ -1,5 +1,7 @@
 # `useFirstMountState`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usefirstmountstate--basic)
+
 Hook that returns `true` if component is just mounted (on first render) and `false` otherwise.
 
 ## Example
