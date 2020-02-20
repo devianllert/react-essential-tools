@@ -1,7 +1,7 @@
 {
   "name": "react-essential-tools",
   "description": "Collection of essential React Hooks and Components ",
-  "version": "0.34.2",
+  "version": "0.35.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/devianllert/react-essential-tools.git"
@@ -22,7 +22,10 @@
     "react",
     "react-hooks",
     "components",
-    "hooks"
+    "hooks",
+    "modal",
+    "tooltip",
+    "animations"
   ],
   "scripts": {
     "start": "npm run storybook",
