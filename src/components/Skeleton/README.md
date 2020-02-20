@@ -1,5 +1,7 @@
 # `Skeleton`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-skeleton--basic)
+
 Display a placeholder preview of your content before the data gets loaded to reduce load-time frustration.
 
 The data for your components might not be immediately available. You can increase the perceived performance for users by using skeletons. It feels like things are happening immediately, then the information is incrementally displayed on the screen.

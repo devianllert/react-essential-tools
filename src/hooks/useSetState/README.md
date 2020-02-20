@@ -1,5 +1,7 @@
 # `useSetState`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usesetstate--basic)
+
 Hook that creates `setState` method which works similar to how
 `this.setState` works in class components. It merges object changes into
 current state.

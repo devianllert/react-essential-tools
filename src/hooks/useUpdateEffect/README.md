@@ -1,5 +1,7 @@
 # `useUpdateEffect`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useupdateeffect--basic)
+
 Hook that ignores the first invocation (e.g. on mount). The signature is exactly the same as the `useEffect` hook.
 
 ## Example

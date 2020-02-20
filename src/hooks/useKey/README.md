@@ -1,5 +1,7 @@
 # `useKey`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usekey--basic)
+
 Hook that executes a `handler` when a keyboard key is used.
 
 ## Example

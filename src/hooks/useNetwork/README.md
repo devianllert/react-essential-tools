@@ -1,5 +1,7 @@
 # `useNetwork`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usenetwork--basic)
+
 Hook that returns network information
 
 ## Example

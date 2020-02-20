@@ -1,5 +1,7 @@
 # `Fade`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-fade--basic)
+
 Fade component fade in from transparent to opaque.
 
 # Example

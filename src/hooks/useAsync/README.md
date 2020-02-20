@@ -1,5 +1,7 @@
 # `useAsync`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useasync--basic)
+
 Hook that resolves an `async` function or a function that returns a promise
 
 ## Example

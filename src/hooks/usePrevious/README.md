@@ -1,5 +1,7 @@
 # `usePrevious`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useprevious--basic)
+
 Hook that stores a value and pass it back to the component on each render.
 Useful for example to store a prop and compare it to the newest value.
 
