@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import { Modal } from '../Modal';
 import { Grow } from '../../Grow';
+import { Backdrop } from '../../Backdrop';
 
 export default {
   title: 'Components|Modal',
@@ -94,7 +95,12 @@ export const WithTransition = (): ReactElement => {
         {open ? 'close' : 'open'}
       </button>
 
-      <StyledModal open={open} onClose={handleClose}>
+      <StyledModal
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+      >
         <Grow in={open}>
           <ModalBox>
             <h2>Modal title</h2>
