@@ -1,0 +1,15 @@
+language: 'node_js'
+node_js: '10'
+
+before_script:
+  - npm run build-storybook
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local_dir: storybook-static
+  repo: devianllert/react-essential-tools
+  target_branch: gh-pages
+  on:
+    branch: master

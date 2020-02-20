@@ -1,5 +1,7 @@
 # `useTimeoutFn`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usetimeoutfn--basic)
+
 Calls given function after specified amount of milliseconds.
 
 - Not re-render component;

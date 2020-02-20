@@ -1,5 +1,7 @@
 # `useMedia`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usemedia--basic)
+
 Hook that tracks state of a CSS media query.
 
 ## Example

@@ -1,5 +1,7 @@
 # `Collapse`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-collapse--basic)
+
 Collapse component expand vertically from the top of the child element. The collapsedHeight property can be used to set the minimum height when not expanded.
 
 # Example

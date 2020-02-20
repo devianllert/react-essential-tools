@@ -1,5 +1,7 @@
 # `useClipboard`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useclipboard--basic)
+
 Hook that read and write to the user's clipboard.
 
 ## Example

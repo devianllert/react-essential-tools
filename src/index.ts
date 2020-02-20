@@ -8,6 +8,8 @@ export * from './components/Popper';
 export * from './components/Tooltip';
 export * from './components/NoSsr';
 export * from './components/Skeleton';
+export * from './components/Backdrop';
+export * from './components/Modal';
 
 export * from './hooks/useIsomorphicLayoutEffect';
 export * from './hooks/useSetState';

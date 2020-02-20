@@ -1,5 +1,7 @@
 # `useBoolean`
 
+[Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useboolean--basic)
+
 Hook that tracks value of a boolean.
 
 ## Example
