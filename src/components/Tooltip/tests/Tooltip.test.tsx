@@ -7,27 +7,11 @@ import {
   fireEvent,
   cleanup,
 } from '@testing-library/react';
-import Popper from 'popper.js';
+import { Instance } from '@popperjs/core';
 
 import { Tooltip, resetHystersis } from '../Tooltip';
 
 import '@testing-library/jest-dom/extend-expect';
-
-jest.mock('popper.js', () => {
-  const PopperJS = jest.requireActual('popper.js');
-
-  return class {
-    static placements = PopperJS.placements;
-
-    constructor() {
-      return {
-        update: (): void => {},
-        destroy: (): void => {},
-        scheduleUpdate: (): void => {},
-      };
-    }
-  };
-});
 
 describe('<Tooltip />', () => {
   beforeAll(() => {
@@ -144,7 +128,7 @@ describe('<Tooltip />', () => {
   });
 
   it('should use the same popper.js instance between two renders', () => {
-    const popperRef = React.createRef<Popper>();
+    const popperRef = React.createRef<Instance>();
     const { rerender } = render(
       <Tooltip
         title={defaultProps.title}

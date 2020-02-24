@@ -19,6 +19,15 @@ const StyledTooltip = styled(Tooltip)`
   }
 `;
 
+const Scroll = styled.div`
+  height: 150vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+
 export const Basic = (): ReactElement => (
   <Tooltip title="Default button">
     <button type="button">Button</button>
@@ -56,6 +65,18 @@ export const WithControllOpen = (): ReactElement => {
     <Tooltip title="Controlled tooltip" open={state}>
       <button type="button" onClick={(): void => setState(!state)}>Button</button>
     </Tooltip>
+  );
+};
+
+export const WithScroll = (): ReactElement => {
+  const [state, setState] = useState(false);
+
+  return (
+    <Scroll>
+      <Tooltip title="Controlled tooltip" open={state}>
+        <button type="button" onClick={(): void => setState(!state)}>Button</button>
+      </Tooltip>
+    </Scroll>
   );
 };
 
