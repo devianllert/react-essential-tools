@@ -90,7 +90,7 @@ export const WithPosition = (): ReactElement => {
       <button aria-describedby={id} type="button" onClick={handleClick}>
         Toggle Popper
       </button>
-      <Popper key={pos} id={id} open={open} anchorEl={anchorEl} placement={pos}>
+      <Popper id={id} open={open} anchorEl={anchorEl} placement={pos}>
         <div>The content of the Popper.</div>
       </Popper>
     </div>
