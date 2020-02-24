@@ -1,11 +1,15 @@
 /* eslint-disable prefer-arrow-callback */
 import * as React from 'react';
-import PopperJS, {
-  ReferenceObject,
-  PopperOptions,
-  Data,
+import {
+  createPopper,
+  Modifier,
   Placement,
-} from 'popper.js';
+  VirtualElement,
+  Instance,
+  Options,
+  State,
+  ModifierArguments,
+} from '@popperjs/core';
 import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 
 import { setRef } from '../../utils/setRef';
@@ -23,15 +27,16 @@ interface ChildProps {
 }
 
 export interface Props {
-  anchorEl?: null | ReferenceObject | (() => ReferenceObject);
+  anchorEl?: null | VirtualElement | (() => VirtualElement);
   children: React.ReactNode | ((props: ChildProps) => React.ReactNode);
   container?: Element;
+  dir?: 'rtl' | 'ltr';
   disablePortal?: boolean;
-  modifiers?: PopperJS.Modifiers;
+  modifiers?: Partial<Modifier<any>>[];
   open: boolean;
   placement?: Placement;
-  popperOptions?: PopperOptions;
-  popperRef?: React.Ref<PopperJS>;
+  popperOptions?: Partial<Options>;
+  popperRef?: React.Ref<Instance>;
   transition?: boolean;
   className?: string;
   id?: string;
@@ -41,8 +46,29 @@ export interface Props {
   onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 }
 
-function getAnchorEl(anchorEl: null | ReferenceObject | (() => ReferenceObject)): null | ReferenceObject {
+function getAnchorEl(anchorEl: null | VirtualElement | (() => VirtualElement)): null | VirtualElement {
   return typeof anchorEl === 'function' ? anchorEl() : anchorEl;
+}
+
+function flipPlacement(placement: Placement, dir: 'rtl' | 'ltr'): Placement {
+  const direction = dir || 'ltr';
+
+  if (direction === 'ltr') {
+    return placement;
+  }
+
+  switch (placement) {
+    case 'bottom-end':
+      return 'bottom-start';
+    case 'bottom-start':
+      return 'bottom-end';
+    case 'top-end':
+      return 'top-start';
+    case 'top-start':
+      return 'top-end';
+    default:
+      return placement;
+  }
 }
 
 /**
@@ -54,6 +80,7 @@ export const Popper = React.forwardRef(function Popper(props: Props, ref: React.
     anchorEl,
     children,
     container,
+    dir = 'ltr',
     disablePortal = false,
     modifiers,
     open,
@@ -64,17 +91,18 @@ export const Popper = React.forwardRef(function Popper(props: Props, ref: React.
     ...other
   } = props;
 
-  const tooltipRef = React.useRef<Element>();
-  const popperRef = React.useRef<PopperJS>();
+  const tooltipRef = React.useRef<HTMLElement>();
+  const popperRef = React.useRef<Instance>();
   const ownRef = useForkRef(tooltipRef, ref);
 
   const [exited, setExited] = React.useState(true);
 
-  const [placement, setPlacement] = React.useState(initialPlacement);
+  const rtlPlacement = flipPlacement(initialPlacement, dir);
+  const [placement, setPlacement] = React.useState(rtlPlacement);
 
   React.useEffect(() => {
     if (popperRef.current) {
-      popperRef.current.update();
+      popperRef.current.forceUpdate();
     }
   });
 
@@ -88,48 +116,45 @@ export const Popper = React.forwardRef(function Popper(props: Props, ref: React.
       popperRef.current = undefined;
     }
 
-    const handlePopperUpdate = (data: Data): void => {
-      setPlacement(data.placement);
+    const handlePopperUpdate = (data: Partial<State>): void => {
+      setPlacement(data.placement || 'bottom');
     };
 
-    const popper = new PopperJS(getAnchorEl(anchorEl) as ReferenceObject, tooltipRef.current, {
-      placement,
+    const popper = createPopper(getAnchorEl(anchorEl) as VirtualElement, tooltipRef.current, {
+      placement: rtlPlacement,
       ...popperOptions,
-      modifiers: {
-        ...(disablePortal
+      modifiers: [
+        {
+          name: 'updatePlacement',
+          phase: 'afterWrite',
+          enabled: true,
+          fn: (data: ModifierArguments<Options>): void => {
+            handlePopperUpdate(data.state);
+          },
+        },
+        (disablePortal
           ? {}
           : {
-            // It's using scrollParent by default, we can use the viewport when using a portal.
-            preventOverflow: {
-              boundariesElement: 'window',
+            name: 'preventOverflow',
+            options: {
+              rootBoundary: 'document',
             },
           }),
-        ...modifiers,
-        ...popperOptions.modifiers,
-      },
-      // We could have been using a custom modifier like react-popper is doing.
-      // But it seems this is the best public API for this use case.
-      onCreate: (data: Data): void => {
+        ...(modifiers || []),
+        ...(popperOptions.modifiers || []),
+      ],
+      onFirstUpdate: (data: Partial<State>): void => {
         handlePopperUpdate(data);
 
-        if (popperOptions.onCreate) {
-          popperOptions.onCreate(data);
-        }
-      },
-      onUpdate: (data: Data): void => {
-        handlePopperUpdate(data);
-
-        if (popperOptions.onUpdate) {
-          popperOptions.onUpdate(data);
+        if (popperOptions.onFirstUpdate) {
+          popperOptions.onFirstUpdate(data);
         }
       },
     });
 
-    popper.scheduleUpdate();
-
     setRef(popperRefProp, popper);
     setRef(popperRef, popper);
-  }, [popperRefProp, anchorEl, disablePortal, modifiers, open, placement, popperOptions]);
+  }, [popperRefProp, anchorEl, disablePortal, modifiers, open, rtlPlacement, popperOptions]);
 
   const handleRef = React.useCallback((node: HTMLDivElement): void => {
     setRef(ownRef, node);
@@ -187,9 +212,6 @@ export const Popper = React.forwardRef(function Popper(props: Props, ref: React.
       <div
         ref={handleRef}
         role="tooltip"
-        style={{
-          position: 'fixed',
-        }}
         {...other} // eslint-disable-line
       >
         {typeof children === 'function' ? children(childProps) : children}

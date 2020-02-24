@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -47,13 +48,9 @@ interface Props {
   TransitionProps?: TransitionProps;
 }
 
-interface StyledPopperProps {
-  interactive: boolean;
-}
-
-const StyledPopper = styled(Popper)<StyledPopperProps>`
+const StyledPopper = styled(Popper)<{ interactive: boolean }>`
   z-index: 15;
-  pointer-events: ${(props): string => (props.interactive ? 'auto' : 'none')};
+  pointer-events: ${({ interactive }): string => (interactive ? 'auto' : 'none')};
 `;
 
 let hystersisOpen = false;
@@ -64,7 +61,14 @@ export const resetHystersis = (): void => {
   hystersisTimer = undefined;
 };
 
-export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.ReactInstance>): React.ReactElement => {
+/**
+ * Tooltips display informative text when users hover over, focus on, or tap an element.
+ */
+
+export const Tooltip = React.forwardRef(function Tooltip(
+  props: Props,
+  ref: React.Ref<React.ReactInstance>,
+): React.ReactElement {
   const {
     arrow = false,
     children,
@@ -119,15 +123,17 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
 
   const handleRef = useForkRef((children as any).ref, handleOwnRef);
 
+  let open: boolean = isControlled ? (openProp || false) : openState;
+
   React.useEffect(() => {
-    if (!isControlled || defaultId) {
+    if (!open || defaultId) {
       return;
     }
     // Fallback to this default id when possible.
     // Use the random value for client-side rendering only.
     // We can't use it server-side.
     setDefaultId(`tooltip-${Math.round(Math.random() * 1e5)}`);
-  }, [isControlled, defaultId]);
+  }, [open, defaultId]);
 
   React.useEffect(
     () => (): void => {
@@ -215,7 +221,7 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
     clearTimeout(hystersisTimer);
     hystersisTimer = setTimeout(() => {
       hystersisOpen = false;
-    }, 500);
+    }, 500 + leaveDelay);
 
     setOpenState(false);
 
@@ -289,8 +295,6 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
     }, leaveTouchDelay);
   };
 
-  let open: boolean = isControlled ? openProp || false : openState;
-
   // There is no point in displaying an empty tooltip.
   if (title === '') {
     open = false;
@@ -331,12 +335,15 @@ export const Tooltip = React.forwardRef((props: Props, ref: React.Ref<React.Reac
 
   const popperOptions = React.useMemo(
     () => ({
-      modifiers: {
-        arrow: {
-          enabled: Boolean(arrowRef),
-          element: arrowRef,
+      modifiers: [
+        {
+          name: 'arrow',
+          enabled: !!arrowRef,
+          options: {
+            element: arrowRef,
+          },
         },
-      },
+      ],
     }),
     [arrowRef],
   );

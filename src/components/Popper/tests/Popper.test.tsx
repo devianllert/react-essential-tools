@@ -4,22 +4,6 @@ import { render, cleanup } from '@testing-library/react';
 
 import { Popper } from '../Popper';
 
-jest.mock('popper.js', () => {
-  const PopperJS = jest.requireActual('popper.js');
-
-  return class {
-    static placements = PopperJS.placements;
-
-    constructor() {
-      return {
-        update: (): void => {},
-        destroy: (): void => {},
-        scheduleUpdate: (): void => {},
-      };
-    }
-  };
-});
-
 describe('<Popper />', () => {
   afterEach(cleanup);
 
