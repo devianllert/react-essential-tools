@@ -11,7 +11,7 @@ export const Basic = () => {
 
   return (
     <div>
-Screen is wide:
+      Screen is wide:
       {isWide ? 'Yes' : 'No'}
     </div>
   );

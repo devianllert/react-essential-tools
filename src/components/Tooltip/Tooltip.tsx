@@ -95,7 +95,7 @@ export const Tooltip = React.forwardRef(function Tooltip(
   } = props;
 
   const [childNode, setChildNode] = React.useState<Element>();
-  const [arrowRef, setArrowRef] = React.useState();
+  const [arrowRef, setArrowRef] = React.useState<HTMLSpanElement | null>(null);
 
   const ignoreNonTouchEvents = React.useRef(false);
 
