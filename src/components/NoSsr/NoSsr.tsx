@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect';
 
 interface Props {
-  children: React.ReactElement;
+  children?: React.ReactElement;
   defer?: boolean;
   fallback?: React.ReactElement;
 }
@@ -12,8 +12,9 @@ interface Props {
  * NoSsr purposely removes components from the subject of Server Side Rendering (SSR).
  */
 
-export const NoSsr = (props: Props): React.ReactElement | null => {
+export const NoSsr = (props: Props): React.ReactElement => {
   const { children, defer = false, fallback = null } = props;
+
   const [mountedState, setMountedState] = React.useState(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -28,5 +29,5 @@ export const NoSsr = (props: Props): React.ReactElement | null => {
     }
   }, [defer]);
 
-  return mountedState ? children : fallback;
+  return <>{mountedState ? children : fallback}</>;
 };
