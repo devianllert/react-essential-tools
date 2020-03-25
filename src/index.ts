@@ -10,6 +10,7 @@ export * from './components/NoSsr';
 export * from './components/Skeleton';
 export * from './components/Backdrop';
 export * from './components/Modal';
+export * from './components/CircularProgress';
 
 export * from './hooks/useIsomorphicLayoutEffect';
 export * from './hooks/useSetState';

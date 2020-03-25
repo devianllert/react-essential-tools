@@ -20,7 +20,7 @@
 
 Collection of essential React Hooks and Components
 
-[🔥📋 Live storybook usage examples 📋🔥](https://devianllert.github.io/react-essential-tools/)
+[Live storybook usage examples](https://devianllert.github.io/react-essential-tools/)
 
 # Features
 
@@ -48,6 +48,7 @@ import { Tooltip, useAsync } from 'react-essential-tools';
 
 | Source | Preview | Short description |
 | ------ | ------- | ----------------- |
+| [`CircularProgress`](./src/components/CircularProgress) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-circularprogress--indeterminate) | Progress indicators commonly known as spinners, express an unspecified wait time or display the length of a process. |
 | [`Modal`](./src/components/Skeleton) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-modal--basic) | Provides a solid foundation for creating dialogs, popovers, lightboxes, or whatever else. |
 | [`Backdrop`](./src/components/Skeleton) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-backdrop--basic) | A dimmed layer over your application. |
 | [`Skeleton`](./src/components/Skeleton) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/components-skeleton--basic) | Placeholder for loading |
