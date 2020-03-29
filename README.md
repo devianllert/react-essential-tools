@@ -69,7 +69,7 @@ import { Tooltip, useAsync } from 'react-essential-tools';
 | [`useDebouncedCallback`](./src/hooks/useDebouncedCallback) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usedebouncedcallback--basic) | Get debounced callback |
 | [`useLongPress`](./src/hooks/useLongPress) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-uselongpress--basic) | Fires a callback after long pressing |
 | [`useHover`](./src/hooks/useHover) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usehover--basic) | Tracks hovering of the element |
-| [`useHistory`](./src/hooks/useHistory) | | State with undo/redo/reset |
+| [`useHistory`](./src/hooks/useHistory) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usehistory--basic) | State with undo/redo/reset |
 | [`useMedia`](./src/hooks/useMedia) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usemedia--basic) | CSS media query state |
 | [`useMotion`](./src/hooks/useMotion) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-usemotion--basic) | Device acceleration sensor state |
 | [`useClipboard`](./src/hooks/useClipboard) | [Demo](https://devianllert.github.io/react-essential-tools/?path=/story/hooks-useclipboard--basic) | Read and write to the user's clipboard |
