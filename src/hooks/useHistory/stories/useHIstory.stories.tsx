@@ -31,7 +31,7 @@ export const Basic = () => {
       </div>
       <div>
         Future:
-        {state.future[state.future.length]}
+        {state.future[0]}
       </div>
 
       <button type="button" onClick={(): void => setDirection(state.present + 1)}>+</button>
