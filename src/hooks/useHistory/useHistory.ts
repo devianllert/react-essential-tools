@@ -10,24 +10,24 @@ interface UseHistoryActions<T> {
   canRedo: boolean;
 }
 
-interface UseHistoryAction<T> {
+interface UseHistoryAction<T = any> {
   type: string;
   payload?: T;
 }
 
-interface UseHistoryState<T> {
+interface UseHistoryState<T = any> {
   past: T[];
   present: T;
   future: T[];
 }
 
-const initialState: UseHistoryState<unknown> = {
+const initialState: UseHistoryState = {
   past: [],
   present: null,
   future: [],
 };
 
-const reducer: Reducer<UseHistoryState<any>, UseHistoryAction<any>> = (state, action) => {
+const reducer: Reducer<UseHistoryState, UseHistoryAction> = (state, action) => {
   const { past, present, future } = state;
 
   switch (action.type) {
@@ -78,7 +78,7 @@ const reducer: Reducer<UseHistoryState<any>, UseHistoryAction<any>> = (state, ac
  */
 
 export const useHistory = <T>(initialPresent: T): [UseHistoryState<T>, UseHistoryActions<T>] => {
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer<Reducer<UseHistoryState<T>, UseHistoryAction<T>>>(reducer, {
     ...initialState,
     present: initialPresent,
   });
