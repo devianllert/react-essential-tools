@@ -27,7 +27,7 @@ export type AsyncFn<T> = [
 export const useAsyncFn = <T>(
   fn: (...args: any[]) => Promise<T>, // eslint-disable-line
   deps: DependencyList = [],
-  initialState: Partial<AsyncState<T>>,
+  initialState?: Partial<AsyncState<T>>,
 ): AsyncFn<T> => {
   const count = useRef(0);
   const [state, setState] = useSetState<AsyncState<T>>({
