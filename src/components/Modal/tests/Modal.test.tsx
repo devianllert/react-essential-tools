@@ -168,7 +168,6 @@ describe('<Modal />', () => {
       const modal = getByTestId('modal');
       const modalContainer = getByTestId('container');
 
-
       expect(modal.children).toHaveLength(3);
       expect(modal.children[1]).toEqual(modalContainer);
     });

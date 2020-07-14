@@ -18,7 +18,7 @@ interface BackdropProps extends React.HTMLAttributes<HTMLDivElement>{
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactElement;
-  BackdropComponent?: React.ElementType<BackdropProps>;
+  BackdropComponent?: React.ComponentType<BackdropProps>;
   BackdropProps?: Partial<BackdropProps>;
   closeAfterTransition?: boolean;
   container?: HTMLElement | (() => HTMLElement | null) | null;

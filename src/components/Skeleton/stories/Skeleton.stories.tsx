@@ -21,7 +21,6 @@ const CardContent = styled.div`
   padding: 16px;
 `;
 
-
 export default {
   title: 'Components|Skeleton',
 };

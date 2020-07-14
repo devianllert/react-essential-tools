@@ -241,7 +241,6 @@ describe('<Slide />', () => {
       );
       const child = getByTestId('test');
 
-
       expect(child.style.visibility).toEqual('hidden');
       expect(child.style.transform).not.toBeUndefined();
     });

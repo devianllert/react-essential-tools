@@ -26,7 +26,6 @@ export const useClickAway = <T extends Event = Event>(
         savedCallback.current(event);
       };
 
-
       on(document, 'mousedown', listener);
       on(document, 'touchstart', listener);
 
