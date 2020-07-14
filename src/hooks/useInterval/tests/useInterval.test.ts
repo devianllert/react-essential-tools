@@ -51,7 +51,6 @@ describe('useInterval', (): void => {
     expect(handler).toHaveBeenCalledTimes(0);
   });
 
-
   test('if you pass a new `delay`, it will cancel the current timer and start a new one', (): void => {
     const handler = jest.fn();
 

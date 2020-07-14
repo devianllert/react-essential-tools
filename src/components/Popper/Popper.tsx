@@ -21,8 +21,8 @@ interface ChildProps {
   placement: Placement;
   TransitionProps?: {
     in: boolean;
-    onEnter: EnterHandler;
-    onExited: ExitHandler;
+    onEnter: EnterHandler<undefined>;
+    onExited: ExitHandler<HTMLElement>;
   };
 }
 
@@ -32,7 +32,7 @@ export interface Props {
   container?: Element;
   dir?: 'rtl' | 'ltr';
   disablePortal?: boolean;
-  modifiers?: Partial<Modifier<any>>[];
+  modifiers?: Partial<Modifier<string, any>>[];
   open: boolean;
   placement?: Placement;
   popperOptions?: Partial<Options>;

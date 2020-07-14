@@ -25,7 +25,6 @@ interface Props extends Omit<TransitionProps, 'timeout'> {
       };
 }
 
-
 const styles: { [key: string]: React.CSSProperties } = {
   entering: {
     opacity: 1,

@@ -238,10 +238,8 @@ describe('ModalManager', () => {
       modalManager.mount(modal2, {});
       expect(container4.children[0]).toHaveAttribute('aria-hidden');
 
-
       modalManager.remove(modal2);
       expect(container4.children[0]).not.toHaveAttribute('aria-hidden');
-
 
       modalManager.remove(modal1);
       expect(container3.children[0]).not.toHaveAttribute('aria-hidden');

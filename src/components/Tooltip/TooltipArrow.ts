@@ -57,7 +57,6 @@ const tooltipArrowPlacement: TooltipArrowPlacement = {
   `,
 };
 
-
 export const TooltipArrow = styled.span<TooltipArrowProps>`
   position: absolute;
   font-size: 6px;

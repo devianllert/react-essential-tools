@@ -27,7 +27,6 @@ const Scroll = styled.div`
   justify-content: center;
 `;
 
-
 export const Basic = (): ReactElement => (
   <Tooltip title="Default button">
     <button type="button">Button</button>
