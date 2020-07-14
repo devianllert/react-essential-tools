@@ -1,7 +1,7 @@
 {
   "name": "react-essential-tools",
   "description": "Collection of essential React Hooks and Components ",
-  "version": "0.37.3",
+  "version": "0.38.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/devianllert/react-essential-tools.git"
