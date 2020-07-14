@@ -7,7 +7,7 @@ import { TransitionProps } from '../../utils/transitions';
 import { Fade } from '../Fade';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   open: boolean;
   invisible?: boolean;
   transitionDuration?: TransitionProps['timeout'];
