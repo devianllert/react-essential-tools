@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-arrow-callback */
@@ -16,8 +17,18 @@ import { useForkRef } from '../../utils/useForkRef';
 import { debounce } from '../../utils/debounce';
 
 interface Props extends Omit<TransitionProps, 'timeout'> {
+  /**
+   * A single child content element.
+   */
   children: React.ReactElement;
+  /**
+   * Direction the child node will enter from.
+   */
   direction?: 'left' | 'right' | 'up' | 'down';
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
   timeout?:
     | number
     | {
@@ -84,48 +95,48 @@ const defaultTimeout = {
  * Slide in from the edge of the screen.
  * The `direction` property controls which edge of the screen the transition starts from.
  */
-
 export const Slide = React.forwardRef(function Slide(props: Props, ref: React.Ref<React.ReactInstance>) {
   const {
     children,
     direction = 'up',
     in: inProp,
     onEnter,
+    onEntered,
     onEntering,
     onExit,
     onExited,
+    onExiting,
     style,
     timeout = defaultTimeout,
     ...other
   } = props;
 
-  const childrenRef = React.useRef<HTMLElement>();
+  const childrenRef = React.useRef<HTMLElement>(null);
 
-  const handleOwnRef = React.useCallback((instance: HTMLElement) => {
-    childrenRef.current = instance;
-  }, []);
-
-  const handleRefIntermediary = useForkRef((children as any).ref, handleOwnRef);
+  const handleRefIntermediary = useForkRef((children as any).ref, childrenRef);
   const handleRef = useForkRef(handleRefIntermediary, ref);
 
-  const handleEnter = (_: HTMLElement, isAppearing: boolean): void => {
-    const node = childrenRef.current;
+  const normalizedTransitionCallback = (callback: any) => (isAppearing?: boolean): void => {
+    if (callback) {
+      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+      if (isAppearing === undefined) {
+        callback(childrenRef.current);
+      } else {
+        callback(childrenRef.current, isAppearing);
+      }
+    }
+  };
 
-    if (!node) return;
-
+  const handleEnter = normalizedTransitionCallback((node: HTMLElement, isAppearing: boolean): void => {
     setTranslateValue(direction, node);
     reflow(node);
 
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  };
+  });
 
-  const handleEntering = (_: HTMLElement, isAppearing: boolean): void => {
-    const node = childrenRef.current;
-
-    if (!node) return;
-
+  const handleEntering = normalizedTransitionCallback((node: HTMLElement, isAppearing: boolean): void => {
     const transitionProps = getTransitionProps(
       { timeout, style },
       {
@@ -147,13 +158,12 @@ export const Slide = React.forwardRef(function Slide(props: Props, ref: React.Re
     if (onEntering) {
       onEntering(node, isAppearing);
     }
-  };
+  });
 
-  const handleExit = (): void => {
-    const node = childrenRef.current;
+  const handleEntered = normalizedTransitionCallback(onEntered);
+  const handleExiting = normalizedTransitionCallback(onExiting);
 
-    if (!node) return;
-
+  const handleExit = normalizedTransitionCallback((node: HTMLElement): void => {
     const transitionProps = getTransitionProps(
       { timeout, style },
       {
@@ -175,13 +185,9 @@ export const Slide = React.forwardRef(function Slide(props: Props, ref: React.Re
     if (onExit) {
       onExit(node);
     }
-  };
+  });
 
-  const handleExited = (): void => {
-    const node = childrenRef.current;
-
-    if (!node) return;
-
+  const handleExited = normalizedTransitionCallback((node: HTMLElement): void => {
     // No need for transitions when the component is hidden
     node.style.webkitTransition = '';
     node.style.transition = '';
@@ -189,7 +195,7 @@ export const Slide = React.forwardRef(function Slide(props: Props, ref: React.Re
     if (onExited) {
       onExited(node);
     }
-  };
+  });
 
   const updatePosition = React.useCallback(() => {
     if (childrenRef.current) {
@@ -227,12 +233,17 @@ export const Slide = React.forwardRef(function Slide(props: Props, ref: React.Re
 
   return (
     <Transition
+      appear
+      nodeRef={childrenRef}
       onEnter={handleEnter}
+      onEntered={handleEntered}
       onEntering={handleEntering}
       onExit={handleExit}
       onExited={handleExited}
-      appear
+      onExiting={handleExiting}
       in={inProp}
+      // @ts-ignore
+      addEndListener={undefined}
       timeout={timeout}
       {...other}
     >

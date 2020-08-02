@@ -2,11 +2,30 @@ import * as React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 interface Props {
-  animation?: 'pulse' | 'wave' | false;
   className?: string;
+  /**
+   * The animation.
+   * If `false` the animation effect is disabled.
+   */
+  animation?: 'pulse' | 'wave' | false;
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
   component?: React.ElementType<any>;
+  /**
+   * The type of content that will be rendered.
+   */
   variant?: 'text' | 'rect' | 'circle';
+  /**
+   * Height of the skeleton.
+   * Useful when you don't want to adapt the skeleton to a text element but for instance a card.
+   */
   height?: number | string;
+  /**
+   * Width of the skeleton.
+   * Useful when the skeleton is inside an inline element with no width of its own.
+   */
   width?: number | string;
   style?: React.CSSProperties;
 }
@@ -31,7 +50,7 @@ const wave = keyframes`
   }
 
   60% {
-    transform: translateX(100%),
+    transform: translateX(100%);
   }
 
   100% {
@@ -49,7 +68,7 @@ const SkeletonBox = styled.div<Props>`
       margin-top: 0;
       margin-bottom: 0;
       height: auto;
-      transform-origin: 0 60%;
+      transform-origin: 0 55%;
       transform: scale(1, 0.60);
       border-radius: 4px;
 

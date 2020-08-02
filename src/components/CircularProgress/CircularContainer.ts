@@ -8,6 +8,10 @@ interface Props {
 }
 
 const circularRotate = keyframes`
+  0%: {
+    transformOrigin: 50% 50%;
+  }
+
   100% {
     transform: rotate(360deg);
   }

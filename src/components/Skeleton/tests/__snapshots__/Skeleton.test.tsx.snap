@@ -3,7 +3,7 @@
 exports[`<Skeleton /> should match the snapshot 1`] = `
 <div>
   <span
-    class="sc-AxjAm cWNvDU"
+    class="sc-AxjAm cJEJLq"
   />
 </div>
 `;

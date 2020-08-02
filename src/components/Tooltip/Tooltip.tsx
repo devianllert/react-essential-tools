@@ -13,22 +13,75 @@ import { TooltipContent } from './TooltipContent';
 import { TooltipArrow } from './TooltipArrow';
 
 interface Props {
+  /**
+   * If `true`, adds an arrow to the tooltip.
+   */
   arrow?: boolean;
+  /**
+   * Tooltip reference element.
+   */
   children: React.ReactElement;
   className?: string;
   arrowClassName?: string;
+  /**
+   * Do not respond to focus events.
+   */
   disableFocusListener?: boolean;
+  /**
+   * Do not respond to hover events.
+   */
   disableHoverListener?: boolean;
+  /**
+   * Do not respond to long press touch events.
+   */
   disableTouchListener?: boolean;
+  /**
+   * The number of milliseconds to wait before showing the tooltip.
+   * This prop won't impact the enter touch delay (`enterTouchDelay`).
+   */
   enterDelay?: number;
+  /**
+   * The number of milliseconds a user must touch the element before showing the tooltip.
+   */
   enterTouchDelay?: number;
+  /**
+   * This prop is used to help implement the accessibility logic.
+   * If you don't provide this prop. It falls back to a randomly generated id.
+   */
   id?: string;
+  /**
+   * Makes a tooltip interactive, i.e. will not close when the user
+   * hovers over the tooltip before the `leaveDelay` is expired.
+   */
   interactive?: boolean;
+  /**
+   * The number of milliseconds to wait before hiding the tooltip.
+   * This prop won't impact the leave touch delay (`leaveTouchDelay`).
+   */
   leaveDelay?: number;
+  /**
+   * The number of milliseconds after the user stops touching an element before hiding the tooltip.
+   */
   leaveTouchDelay?: number;
+  /**
+   * Callback fired when the component requests to be closed.
+   *
+   * @param {object} event The event source of the callback.
+   */
   onClose?: (event: React.ChangeEvent<{}>) => void;
+  /**
+   * Callback fired when the component requests to be open.
+   *
+   * @param {object} event The event source of the callback.
+   */
   onOpen?: (event: React.ChangeEvent<{}>) => void;
+  /**
+   * If `true`, the tooltip is shown.
+   */
   open?: boolean;
+  /**
+   * Tooltip placement.
+   */
   placement?:
     | 'bottom-end'
     | 'bottom-start'
@@ -42,9 +95,23 @@ interface Props {
     | 'top-end'
     | 'top-start'
     | 'top';
+  /**
+   * Props applied to the `Popper` element.
+   */
   PopperProps?: Partial<import('../Popper/Popper').Props>;
+  /**
+   * Tooltip title. Zero-length titles string are never displayed.
+   */
   title: React.ReactNode;
+  /**
+   * The component used for the transition.
+   */
   TransitionComponent?: React.ComponentType<TransitionProps>;
+  /**
+   * Props applied to the transition element.
+   * By default, the element is based on this
+   * [`Transition`](http://reactcommunity.org/react-transition-group/transition) component.
+   */
   TransitionProps?: TransitionProps;
 }
 
@@ -64,7 +131,6 @@ export const resetHystersis = (): void => {
 /**
  * Tooltips display informative text when users hover over, focus on, or tap an element.
  */
-
 export const Tooltip = React.forwardRef(function Tooltip(
   props: Props,
   ref: React.Ref<React.ReactInstance>,

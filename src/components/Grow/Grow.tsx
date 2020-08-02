@@ -15,7 +15,16 @@ import {
 import { useForkRef } from '../../utils/useForkRef';
 
 interface Props extends Omit<TransitionProps, 'timeout'> {
+  /**
+   * A single child content element.
+   */
   children: React.ReactElement;
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   *
+   * Set to 'auto' to automatically calculate transition time based on height.
+   */
   timeout?: 'auto' | number | {
     appear?: number;
     enter?: number;
@@ -43,18 +52,39 @@ export const Grow = React.forwardRef(function Grow(props: Props, ref: React.Ref<
     children,
     in: inProp,
     onEnter,
+    onEntered,
+    onEntering,
     onExit,
+    onExited,
+    onExiting,
     timeout = 'auto',
     style,
     ...other
   } = props;
 
-  const handleRef = useForkRef((children as any).ref, ref);
+  const nodeRef = React.useRef<HTMLElement>(null);
+  const foreignRef = useForkRef((children as any).ref, ref);
+  const handleRef = useForkRef(nodeRef, foreignRef);
 
   const timer = React.useRef<number>();
   const autoTimeout = React.useRef<number>();
 
-  const handleEnter = (node: HTMLElement, isAppearing: boolean): void => {
+  const normalizedTransitionCallback = (callback: any) => (maybeIsAppearing?: boolean): void => {
+    if (callback) {
+      const node = nodeRef.current;
+
+      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+      if (maybeIsAppearing === undefined) {
+        callback(node);
+      } else {
+        callback(node, maybeIsAppearing);
+      }
+    }
+  };
+
+  const handleEntering = normalizedTransitionCallback(onEntering);
+
+  const handleEnter = normalizedTransitionCallback((node: HTMLElement, isAppearing: boolean): void => {
     reflow(node); // So the animation always start from the start.
 
     const { duration: transitionDuration, delay } = getTransitionProps(
@@ -87,9 +117,13 @@ export const Grow = React.forwardRef(function Grow(props: Props, ref: React.Ref<
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  };
+  });
 
-  const handleExit = (node: HTMLElement): void => {
+  const handleEntered = normalizedTransitionCallback(onEntered);
+
+  const handleExiting = normalizedTransitionCallback(onExiting);
+
+  const handleExit = normalizedTransitionCallback((node: HTMLElement): void => {
     const { duration: transitionDuration, delay } = getTransitionProps(
       { style, timeout },
       {
@@ -123,9 +157,11 @@ export const Grow = React.forwardRef(function Grow(props: Props, ref: React.Ref<
     if (onExit) {
       onExit(node);
     }
-  };
+  });
 
-  const addEndListener = (_: HTMLElement, done: () => void): void => {
+  const handleExited = normalizedTransitionCallback(onExited);
+
+  const addEndListener = (done: () => void): void => {
     if (timeout === 'auto') {
       timer.current = setTimeout(done, autoTimeout.current || 0);
     }
@@ -139,12 +175,19 @@ export const Grow = React.forwardRef(function Grow(props: Props, ref: React.Ref<
     <Transition
       appear
       in={inProp}
+      nodeRef={nodeRef}
       onEnter={handleEnter}
+      onEntered={handleEntered}
+      onEntering={handleEntering}
       onExit={handleExit}
-      addEndListener={addEndListener}
-      // @ts-ignore
+      onExited={handleExited}
+      onExiting={handleExiting}
       // Wrong typings
-      timeout={timeout === 'auto' ? null : timeout}
+      // @ts-ignore
+      addEndListener={addEndListener}
+      // Wrong typings
+      // @ts-ignore
+      timeout={timeout === 'auto' ? undefined : timeout}
       {...other} // eslint-disable-line
     >
       {(state: string, childProps: any): React.ReactElement => React.cloneElement(children, {
