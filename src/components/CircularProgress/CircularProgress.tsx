@@ -10,6 +10,38 @@ import { CircularContainer } from './CircularContainer';
 import { CircularSVG } from './CircularSVG';
 import { Circle } from './Circle';
 
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * The color of the component. It supports those theme colors that make sense for this component.
+   */
+  color?: string;
+  /**
+   * If `true`, the shrink animation is disabled.
+   * This only works if variant is `indeterminate`.
+   */
+  disableShrink?: boolean;
+  /**
+   * The size of the circle.
+   * If using a number, the pixel unit is assumed.
+   * If using a string, you need to provide the CSS unit, e.g '3rem'.
+   */
+  size?: number;
+  /**
+   * The thickness of the circle.
+   */
+  thickness?: number;
+  /**
+   * The value of the progress indicator for the determinate and static variants.
+   * Value between 0 and 100.
+   */
+  value?: number;
+  /**
+   * The variant to use.
+   * Use indeterminate when there is no progress value.
+   */
+  variant?: 'determinate' | 'indeterminate' | 'stable';
+}
+
 const SIZE = 44;
 
 const getRelativeValue = (value: number, min: number, max: number): number => (
@@ -26,17 +58,11 @@ const easeOut = (t: number): number => {
 
 const easeIn = (t: number): number => t * t;
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
-  color?: string;
-  disableShrink?: boolean;
-  size?: number;
-  style?: CSSProperties;
-  thickness?: number;
-  value?: number;
-  variant?: 'determinate' | 'indeterminate' | 'stable';
-}
-
+/**
+ * If the progress bar is describing the loading progress of a particular region of a page,
+ * you should use `aria-describedby` to point to the progress bar, and set the `aria-busy`
+ * attribute to `true` on that region until it has finished loading.
+ */
 export const CircularProgress = React.forwardRef(function CircularProgress(props: Props, ref: Ref<HTMLDivElement>) {
   const {
     className,

@@ -17,39 +17,112 @@ interface BackdropProps extends React.HTMLAttributes<HTMLDivElement>{
 }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * A single child content element.
+   */
   children: React.ReactElement;
+  /**
+   * A backdrop component. This prop enables custom backdrop rendering.
+   */
   BackdropComponent?: React.ComponentType<BackdropProps>;
+  /**
+   * Props applied to the [`Backdrop`](/api/backdrop/) element.
+   */
   BackdropProps?: Partial<BackdropProps>;
+  /**
+   * When set to true the Modal waits until a nested Transition is completed before closing.
+   */
   closeAfterTransition?: boolean;
+  /**
+   * A HTML element or function that returns one.
+   * The `container` will have the portal children appended to it.
+   *
+   * By default, it uses the body of the top-level document object,
+   * so it's simply `document.body` most of the time.
+   */
   container?: HTMLElement | (() => HTMLElement | null) | null;
+  /**
+   * If `true`, the modal will not automatically shift focus to itself when it opens, and
+   * replace it to the last focused element when it closes.
+   * This also works correctly with any modal children that have the `disableAutoFocus` prop.
+   *
+   * Generally this should never be set to `true` as it makes the modal less
+   * accessible to assistive technologies, like screen readers.
+   */
   disableAutoFocus?: boolean;
+  /**
+   * If `true`, clicking the backdrop will not fire `onClose`.
+   */
   disableBackdropClick?: boolean;
+  /**
+   * If `true`, the modal will not prevent focus from leaving the modal while open.
+   *
+   * Generally this should never be set to `true` as it makes the modal less
+   * accessible to assistive technologies, like screen readers.
+   */
   disableEnforceFocus?: boolean;
+  /**
+   * If `true`, hitting escape will not fire `onClose`.
+   */
   disableEscapeKeyDown?: boolean;
+  /**
+   * The `children` will be inside the DOM hierarchy of the parent component.
+   */
   disablePortal?: boolean;
+  /**
+   * If `true`, the modal will not restore focus to previously focused element once
+   * modal is hidden.
+   */
   disableRestoreFocus?: boolean;
+  /**
+   * Disable the scroll lock behavior.
+   */
   disableScrollLock?: boolean;
+  /**
+   * If `true`, the backdrop is not rendered.
+   */
   hideBackdrop?: boolean;
+  /**
+   * State manager for containers and the modals in those containers
+   */
   manager?: ModalManager;
+  /**
+   * Callback fired when the backdrop is clicked.
+   */
   onBackdropClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  /**
+   * Callback fired when the component requests to be closed.
+   * The `reason` parameter can optionally be used to control the response to `onClose`.
+   *
+   * @param {object} event The event source of the callback.
+   * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
+   */
   onClose?: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void;
+  /**
+   * Callback fired when the escape key is pressed,
+   * `disableEscapeKeyDown` is false and the modal is in focus.
+   */
   onEscapeKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  /**
+   * If `true`, the modal is open.
+   */
   open: boolean;
 }
 
-function getContainer(
+const getContainer = (
   container: HTMLElement | undefined | null | (() => HTMLElement | undefined | null),
-): HTMLElement | undefined | null {
+  // eslint-disable-next-line arrow-body-style
+): HTMLElement | undefined | null => {
   return typeof container === 'function' ? container() : container;
-}
+};
 
-function getHasTransition(props: { children: any }): boolean {
+const getHasTransition = (props: { children: any }): boolean => {
   if (props.children) {
     return Object.prototype.hasOwnProperty.call(props.children.props, 'in');
   }
 
   return false;
-}
+};
 
 const Content = styled.div<{ hidden?: boolean }>`
   position: fixed;

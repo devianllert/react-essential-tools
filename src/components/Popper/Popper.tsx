@@ -26,31 +26,72 @@ interface ChildProps {
   };
 }
 
-export interface Props {
+export interface Props extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  /**
+   * A HTML element, [referenceObject](https://popper.js.org/docs/v1/#referenceObject),
+   * or a function that returns either.
+   * It's used to set the position of the popper.
+   * The return value will passed as the reference object of the Popper instance.
+   */
   anchorEl?: null | VirtualElement | (() => VirtualElement);
+  /**
+   * Popper render function or node.
+   */
   children: React.ReactNode | ((props: ChildProps) => React.ReactNode);
+  /**
+   * A HTML element or function that returns one.
+   * The `container` will have the portal children appended to it.
+   *
+   * By default, it uses the body of the top-level document object,
+   * so it's simply `document.body` most of the time.
+   */
   container?: Element;
+  /**
+   * Specifies the direction of the element's content.
+   */
   dir?: 'rtl' | 'ltr';
+  /**
+   * The `children` will be inside the DOM hierarchy of the parent component.
+   */
   disablePortal?: boolean;
+  /**
+   * Popper.js is based on a "plugin-like" architecture,
+   * most of its features are fully encapsulated "modifiers".
+   *
+   * A modifier is a function that is called each time Popper.js needs to
+   * compute the position of the popper.
+   * For this reason, modifiers should be very performant to avoid bottlenecks.
+   * To learn how to create a modifier, [read the modifiers documentation](https://popper.js.org/docs/v1/#modifiers).
+   */
   modifiers?: Partial<Modifier<string, any>>[];
+  /**
+   * If `true`, the popper is visible.
+   */
   open: boolean;
+  /**
+   * Popper placement.
+   */
   placement?: Placement;
+  /**
+   * Options provided to the [`popper.js`](https://popper.js.org/docs/v1/) instance.
+   */
   popperOptions?: Partial<Options>;
+  /**
+   * A ref that points to the used popper instance.
+   */
   popperRef?: React.Ref<Instance>;
+  /**
+   * Help supporting a react-transition-group/Transition component.
+   */
   transition?: boolean;
-  className?: string;
-  id?: string;
-  onMouseOver?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 }
 
-function getAnchorEl(anchorEl: null | VirtualElement | (() => VirtualElement)): null | VirtualElement {
+// eslint-disable-next-line arrow-body-style
+const getAnchorEl = (anchorEl: null | VirtualElement | (() => VirtualElement)): null | VirtualElement => {
   return typeof anchorEl === 'function' ? anchorEl() : anchorEl;
-}
+};
 
-function flipPlacement(placement: Placement, dir: 'rtl' | 'ltr'): Placement {
+const flipPlacement = (placement: Placement, dir: 'rtl' | 'ltr'): Placement => {
   const direction = dir || 'ltr';
 
   if (direction === 'ltr') {
@@ -69,7 +110,7 @@ function flipPlacement(placement: Placement, dir: 'rtl' | 'ltr'): Placement {
     default:
       return placement;
   }
-}
+};
 
 /**
  * A Popper can be used to display some content on top of another.

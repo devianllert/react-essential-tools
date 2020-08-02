@@ -7,9 +7,23 @@ import { TransitionProps } from '../../utils/transitions';
 import { Fade } from '../Fade';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * The content of the component.
+   */
   children?: React.ReactNode;
+  /**
+   * If `true`, the backdrop is open.
+   */
   open: boolean;
+  /**
+   * If `true`, the backdrop is invisible.
+   * It can be used when rendering a popover or a custom select component.
+   */
   invisible?: boolean;
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
   transitionDuration?: TransitionProps['timeout'];
 }
 

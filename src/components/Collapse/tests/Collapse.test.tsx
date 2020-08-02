@@ -163,34 +163,44 @@ describe('<Collapse />', () => {
     });
   });
 
-  describe('prop: collapsedHeight', () => {
-    const collapsedHeight = '10px';
+  describe('prop: collapsedSize', () => {
+    const collapsedSize = '10px';
 
-    it('should work when closed', () => {
+    it('height: should work when closed', () => {
       const { container } = render(
-        <Collapse in collapsedHeight={collapsedHeight}>
+        <Collapse in collapsedSize={collapsedSize}>
           <div />
         </Collapse>,
       );
 
-      expect(container.firstChild).toHaveStyle(`min-height: ${collapsedHeight}`);
+      expect(container.firstChild).toHaveStyle(`min-height: ${collapsedSize}`);
+    });
+
+    it('width: should work when closed', () => {
+      const { container } = render(
+        <Collapse in collapsedSize={collapsedSize} orientation="horizontal">
+          <div />
+        </Collapse>,
+      );
+
+      expect(container.firstChild).toHaveStyle(`min-width: ${collapsedSize}`);
     });
 
     it('should be taken into account in handleExiting', () => {
       const handleExiting = jest.fn();
       const { rerender } = render(
-        <Collapse in collapsedHeight={collapsedHeight} onExiting={handleExiting}>
+        <Collapse in collapsedSize={collapsedSize} onExiting={handleExiting}>
           <div />
         </Collapse>,
       );
 
       rerender(
-        <Collapse in={false} collapsedHeight={collapsedHeight} onExiting={handleExiting}>
+        <Collapse in={false} collapsedSize={collapsedSize} onExiting={handleExiting}>
           <div />
         </Collapse>,
       );
 
-      expect(handleExiting.mock.calls[0][0].style.height).toBe(collapsedHeight);
+      expect(handleExiting.mock.calls[0][0].style.height).toBe(collapsedSize);
     });
   });
 

@@ -14,8 +14,14 @@ import {
 import { useForkRef } from '../../utils/useForkRef';
 
 interface Props extends Omit<TransitionProps, 'timeout'> {
+  /**
+   * A single child content element.
+   */
   children: React.ReactElement;
-  direction?: 'left' | 'right' | 'up' | 'down';
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
   timeout?:
     | 'auto'
     | number
@@ -45,15 +51,36 @@ export const Zoom = React.forwardRef(function Zoom(props: Props, ref: React.Ref<
     children,
     in: inProp,
     onEnter,
+    onEntered,
+    onEntering,
     onExit,
+    onExited,
+    onExiting,
     style,
     timeout = defaultTimeout,
     ...other
   } = props;
 
-  const handleRef = useForkRef((children as any).ref, ref);
+  const nodeRef = React.useRef<HTMLElement>(null);
+  const foreignRef = useForkRef((children as any).ref, ref);
+  const handleRef = useForkRef(nodeRef, foreignRef);
 
-  const handleEnter = (node: HTMLElement, isAppearing: boolean): void => {
+  const normalizedTransitionCallback = (callback: any) => (maybeIsAppearing?: boolean): void => {
+    if (callback) {
+      const node = nodeRef.current;
+
+      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+      if (maybeIsAppearing === undefined) {
+        callback(node);
+      } else {
+        callback(node, maybeIsAppearing);
+      }
+    }
+  };
+
+  const handleEntering = normalizedTransitionCallback(onEntering);
+
+  const handleEnter = normalizedTransitionCallback((node: HTMLElement, isAppearing: boolean): void => {
     reflow(node); // So the animation always start from the start.
 
     const transitionProps = getTransitionProps(
@@ -69,9 +96,13 @@ export const Zoom = React.forwardRef(function Zoom(props: Props, ref: React.Ref<
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  };
+  });
 
-  const handleExit = (node: HTMLElement): void => {
+  const handleEntered = normalizedTransitionCallback(onEntered);
+
+  const handleExiting = normalizedTransitionCallback(onExiting);
+
+  const handleExit = normalizedTransitionCallback((node: HTMLElement): void => {
     const transitionProps = getTransitionProps(
       { style, timeout },
       {
@@ -85,14 +116,21 @@ export const Zoom = React.forwardRef(function Zoom(props: Props, ref: React.Ref<
     if (onExit) {
       onExit(node);
     }
-  };
+  });
+
+  const handleExited = normalizedTransitionCallback(onExited);
 
   return (
     <Transition
       appear
       in={inProp}
+      nodeRef={nodeRef}
       onEnter={handleEnter}
+      onEntered={handleEntered}
+      onEntering={handleEntering}
       onExit={handleExit}
+      onExited={handleExited}
+      onExiting={handleExiting}
       // @ts-ignore
       // Wrong typings
       timeout={timeout === 'auto' ? null : timeout}

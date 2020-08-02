@@ -15,7 +15,14 @@ import {
 import { useForkRef } from '../../utils/useForkRef';
 
 interface Props extends Omit<TransitionProps, 'timeout'> {
+  /**
+   * A single child content element.
+   */
   children: React.ReactElement;
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
   timeout?:
     | number
     | {
@@ -42,21 +49,41 @@ const defaultTimeout = {
 /**
  * Fade component fade in from transparent to opaque.
  */
-
 export const Fade = React.forwardRef(function Fade(props: Props, ref: React.Ref<React.ReactInstance>) {
   const {
     children,
     in: inProp,
     onEnter,
+    onEntered,
+    onEntering,
     onExit,
+    onExited,
+    onExiting,
     timeout = defaultTimeout,
     style,
     ...other
   } = props;
 
-  const handleRef = useForkRef((children as any).ref, ref);
+  const nodeRef = React.useRef<HTMLElement>(null);
+  const foreignRef = useForkRef((children as any).ref, ref);
+  const handleRef = useForkRef(nodeRef, foreignRef);
 
-  const handleEnter = (node: HTMLElement, isAppearing: boolean): void => {
+  const normalizedTransitionCallback = (callback: any) => (maybeIsAppearing?: boolean): void => {
+    if (callback) {
+      const node = nodeRef.current;
+
+      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+      if (maybeIsAppearing === undefined) {
+        callback(node);
+      } else {
+        callback(node, maybeIsAppearing);
+      }
+    }
+  };
+
+  const handleEntering = normalizedTransitionCallback(onEntering);
+
+  const handleEnter = normalizedTransitionCallback((node: HTMLElement, isAppearing: boolean) => {
     reflow(node); // So the animation always start from the start.
 
     const transitionProps = getTransitionProps(
@@ -65,36 +92,51 @@ export const Fade = React.forwardRef(function Fade(props: Props, ref: React.Ref<
         mode: 'enter',
       },
     );
+
     node.style.webkitTransition = create('opacity', transitionProps);
     node.style.transition = create('opacity', transitionProps);
 
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  };
+  });
 
-  const handleExit = (node: HTMLElement): void => {
+  const handleEntered = normalizedTransitionCallback(onEntered);
+
+  const handleExiting = normalizedTransitionCallback(onExiting);
+
+  const handleExit = normalizedTransitionCallback((node: HTMLElement) => {
     const transitionProps = getTransitionProps(
       { style, timeout },
       {
         mode: 'exit',
       },
     );
+
     node.style.webkitTransition = create('opacity', transitionProps);
     node.style.transition = create('opacity', transitionProps);
 
     if (onExit) {
       onExit(node);
     }
-  };
+  });
+
+  const handleExited = normalizedTransitionCallback(onExited);
 
   return (
     <Transition
       appear
       in={inProp}
+      nodeRef={nodeRef}
       onEnter={handleEnter}
+      onEntered={handleEntered}
+      onEntering={handleEntering}
       onExit={handleExit}
+      onExited={handleExited}
+      onExiting={handleExiting}
       timeout={timeout}
+      // @ts-ignore
+      addEndListener={undefined}
       {...other}
     >
       {(state: string, childProps: any): React.ReactElement => React.cloneElement(children, {

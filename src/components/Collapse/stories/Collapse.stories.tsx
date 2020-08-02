@@ -23,7 +23,7 @@ const Block = styled.div`
   background-color: #d4d4d4;
 `;
 
-export const Basic = (): ReactElement => {
+export const Vertical = (): ReactElement => {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (): void => {
@@ -35,6 +35,24 @@ export const Basic = (): ReactElement => {
       <button type="button" onClick={handleChange}>{checked ? 'out' : 'in'}</button>
 
       <Collapse in={checked}>
+        <Block>Collapse</Block>
+      </Collapse>
+    </>
+  );
+};
+
+export const Horizontal = (): ReactElement => {
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = (): void => {
+    setChecked((prev) => !prev);
+  };
+
+  return (
+    <>
+      <button type="button" onClick={handleChange}>{checked ? 'out' : 'in'}</button>
+
+      <Collapse in={checked} orientation="horizontal">
         <Block>Collapse</Block>
       </Collapse>
     </>
